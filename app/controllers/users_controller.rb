@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user].permit(:email, :password, :password_confirmation))
+    @user = User.new(create_params)
 
     if @user.save
       redirect_to users_path
@@ -24,5 +24,11 @@ class UsersController < ApplicationController
 
   def verify_access!
     authorize!(:manage, User)
+  end
+
+  private
+
+  def create_params
+    params[:user].permit(:name, :slack_username, :email, :password, :password_confirmation)
   end
 end

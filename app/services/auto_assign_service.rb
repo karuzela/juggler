@@ -4,10 +4,11 @@ class AutoAssignService
   end
 
   def call
-    return false if @pull_request.reviewer? || !@pull_request.pending?
+    return false if @pull_request.reviewer || !@pull_request.pending?
     update_pull_request
     send_slack_message
     send_email_messsage
+    set_remainder
 
     true
   end
@@ -18,10 +19,16 @@ class AutoAssignService
   end
 
   def send_slack_message
-    SlackClient.new("You are auto assigned to PR review", @pull_request.reviewer.slack_username)
+    slack = SlackClient.new()
+    url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
+    slack.send_message("You are auto assigned to [PR](#{url}) review", @pull_request.reviewer.slack_channel)
   end
 
   def send_email_messsage
+    NotificationMailer.auto_assign(@pull_request).deliver_now
+  end
 
+  def set_remainder
+    ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
   end
 end

@@ -10,3 +10,10 @@
   = link_to 'Take', take_pull_request_path(@pull_request), method: :patch, class: 'btn btn-default'
 %br
 = @pull_request.body
+
+- if current_user == @pull_request.reviewer
+  = form_tag resolve_pull_request_path(@pull_request), method: :patch do
+    = text_area_tag 'pull_request[comment]', '', rows: 10, cols: 80
+    %br
+    = submit_tag 'Accept'
+    = submit_tag 'Reject'
