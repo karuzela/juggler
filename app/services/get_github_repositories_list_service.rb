@@ -1,7 +1,7 @@
 class GetGithubRepositoriesListService
 
   def initialize(access_token, opts={})
-    @client = Octokit::Client.new(access_token: access_token)
+    @client = Octokit::Client.new(access_token: access_token, auto_paginate: true)
   end
 
   def call
