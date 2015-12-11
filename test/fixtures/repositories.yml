@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  git_url: MyString
+  html_url: MyString
+  owner: MyString
+  synchronized: false
+
+two:
+  name: MyString
+  git_url: MyString
+  html_url: MyString
+  owner: MyString
+  synchronized: false
