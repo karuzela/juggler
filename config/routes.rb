@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
 
-  resources :repositories do
+  resources :repositories, except: [:new, :create, :show, :destroy] do
     member do
-      get 'add'
-      get 'remove'
+      get :add
+      get :remove
     end
     collection do
-      get 'refresh'
+      get :refresh
+      post :github_callback
     end
   end
 
   resources :pull_requests do
+    patch :resolve, on: :member
     patch :take, on: :member
   end
 

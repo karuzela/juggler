@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 ruby "2.2.1"
 
+gem "airbrake", "~> 4.3.4"
 gem "cancancan", "~> 1.13.1"
 gem "devise", "~> 3.5.3"
 gem "figaro", "~> 1.1.1"
