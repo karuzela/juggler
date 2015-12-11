@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
+gem 'devise', '~> 3.5.3'
 gem 'haml', '~> 4.0.7'
 gem 'pg', '~> 0.15'
 gem 'rails', '4.2.5'
