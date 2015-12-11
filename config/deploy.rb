@@ -26,7 +26,7 @@ set :deploy_to, '/home/ronin/apps/collective-review'
 set :linked_files, fetch(:linked_files, []).push('config/application.yml', 'config/database.yml', 'config/unicorn.rb')
 
 # Default value for linked_dirs is []
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -35,6 +35,10 @@ set :linked_files, fetch(:linked_files, []).push('config/application.yml', 'conf
 # set :keep_releases, 5
 
 namespace :deploy do
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -44,3 +48,5 @@ namespace :deploy do
     end
   end
 end
+
+after 'deploy:publishing', 'deploy:restart'
