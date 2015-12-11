@@ -31,7 +31,7 @@
     = stylesheet_link_tag "application", media: "all"
     = javascript_include_tag "application"
 
-    
+
     / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     / WARNING: Respond.js doesn't work if you view the page via file://
     /[if lt IE 9]
@@ -46,7 +46,7 @@
             .navbar-header
               %a.navbar-brand{:href => "/"}
                 = image_tag "logo.png", {style:"height:28px"}
-                
+
               %button.navbar-toggle.collapsed{"data-target" => "#navbar-collapse", "data-toggle" => "collapse", :type => "button"}
                 %i.fa.fa-bars
             / Collect the nav links, forms, and other content for toggling
@@ -59,12 +59,12 @@
                       %span.caret
                     %ul.dropdown-menu{:role => "menu"}
                       %li
-                        %a{:href => "#"} Home Page
+                        = link_to 'Home Page', root_path
                       %li.divider
                       %li
-                        %a{:href => "#"} Manage Users
+                        = link_to 'Manage Users', users_path
                       %li
-                        %a{:href => "#"} Manage Repositories
+                        = link_to 'Manage Repositories', repositories_path
             / /.navbar-collapse
             / Navbar Right Menu
             .navbar-custom-menu
@@ -75,7 +75,7 @@
                     / Menu Toggle Button
                     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                       / hidden-xs hides the username on small devices so only the image appears.
-                      %span.hidden-xs Alexander Pierce
+                      %span.hidden-xs= current_user.name
                     %ul.dropdown-menu
                       / The user image in the menu
                       %li.user-header
@@ -83,7 +83,7 @@
                           = current_user.name
                           %br
                           = current_user.email
-                          %small 
+                          %small
                             = "Member since #{current_user.created_at.to_date}"
                       / Menu Footer
                       %li.user-footer
