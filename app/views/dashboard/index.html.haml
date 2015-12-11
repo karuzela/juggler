@@ -6,6 +6,7 @@
     %th Repository
     %th Reviewer
     %th Opened at
+    %th State
   - @pull_requests.each do |pull_request|
     %tr
       %td= link_to pull_request.title, pull_request_path(pull_request)
@@ -14,3 +15,4 @@
         - if pull_request.reviewer.present?
           = pull_request.reviewer.name
       %td= pull_request.opened_at
+      %td= pull_request.state

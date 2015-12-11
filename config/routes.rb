@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :pull_requests do
+    patch :resolve, on: :member
     patch :take, on: :member
   end
 
