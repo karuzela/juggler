@@ -10,6 +10,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'slack-notifier'
 gem "octokit", "~> 4.0"
 gem "figaro"
+gem 'sidekiq'
 
 group :development do
   gem "better_errors"
