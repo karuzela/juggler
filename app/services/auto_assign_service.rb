@@ -19,10 +19,10 @@ class AutoAssignService
 
   def send_slack_message
     slack = SlackClient.new()
-    slack.send_message("You are auto assigned to PR review", @pull_request.reviewer.slack_username)
+    slack.send_message("You are auto assigned to PR review", @pull_request.reviewer.slack_channel)
   end
 
   def send_email_messsage
-    NotyficationMailer.auto_assign(@pull_request).deliver_now
+    NotificationMailer.auto_assign(@pull_request).deliver_now
   end
 end

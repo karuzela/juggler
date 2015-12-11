@@ -1,4 +1,4 @@
-class NotyficationMailer < ApplicationMailer
+class NotificationMailer < ApplicationMailer
 
   def auto_assign(pull_request)
     @pull_request = pull_request
