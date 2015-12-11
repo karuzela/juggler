@@ -11,13 +11,12 @@ class CreatePullRequestFromPayloadService
   private
 
   def pr_params(payload)
-    pr_hash = {
-      :state => 'pending',
-      :opened_at => payload['pull_request']['created_at'],
-      :title => payload['pull_request']['title'],
-      :body => payload['pull_request']['body']
-    }
-    pr_hash[:repository_id] = Repository.find_by_github_id(payload['repository']['id']).id
+    pr_hash = {}
+    pr_hash[:state] = 'pending'
+    pr_hash[:opened_at] = payload['pull_request']['created_at'] if payload['pull_request'].present?
+    pr_hash[:title] = payload['pull_request']['title'] if payload['pull_request'].present?
+    pr_hash[:body] = payload['pull_request']['body'] if payload['pull_request'].present?
+    pr_hash[:repository_id] = Repository.find_by_github_id(payload['repository']['id']).id if payload['repository'].present?
     return pr_hash
   end
 
