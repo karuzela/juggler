@@ -24,7 +24,9 @@ module CollectiveReview
     config.active_record.raise_in_transactional_callbacks = true
 
     config.generators do |generators|
-      generators.test_framework :rspec
+      generators.assets false
+      generators.helper false
+      generators.test_framework :rspec, view_specs: false, helper_specs: false, controller_specs: false
       generators.fixture_replacement :factory_girl, dir: "spec/factories"
     end
   end
