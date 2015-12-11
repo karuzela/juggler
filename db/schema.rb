@@ -11,10 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211102232) do
+ActiveRecord::Schema.define(version: 20151211103838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pull_requests", force: :cascade do |t|
+    t.integer  "repository_id",                     null: false
+    t.integer  "author_id"
+    t.integer  "reviewer_id"
+    t.string   "state",         default: "pending", null: false
+    t.datetime "opened_at",                         null: false
+    t.datetime "assigned_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  create_table "repositories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "git_url"
+    t.string   "html_url"
+    t.string   "owner"
+    t.boolean  "synchronized", default: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
