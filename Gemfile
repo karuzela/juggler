@@ -8,10 +8,15 @@ gem 'rails', '4.2.5'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'slack-notifier'
+gem "octokit", "~> 4.0"
 
 group :development do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'spring'
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "spring"
 end
 
+group :test do
+  gem "factory_girl_rails"
+  gem "rspec-rails"
+end
