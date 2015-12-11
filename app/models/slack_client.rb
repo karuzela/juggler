@@ -1,13 +1,13 @@
 require 'slack-notifier'
 class SlackClient
   def initialize
-    @notifier = Slack::Notifier.new "https://hooks.slack.com/services/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",
-      channel: '#collective-review',
+    @notifier = Slack::Notifier.new ENV["SLACK_WEBHOOK_URL"],
+      channel: ENV["SLACK_DEFAULT_CHANNEL"],
       username: 'bot',
       icon_emoji: ":robot_face:"
   end
 
-  def send_message(message, channel = '#collective-review')
+  def send_message(message, channel = ENV["SLACK_DEFAULT_CHANNEL"])
     @notifier.ping message, channel: channel
   end
 end
