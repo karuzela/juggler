@@ -16,5 +16,8 @@
         %td= repo.owner
         %td= repo.synchronized
         %td
-          =link_to 'Add', add_repository_path(repo)
-          =link_to 'Remove', remove_repository_path(repo)
+          - if repo.synchronized?
+            = link_to 'Remove', remove_repository_path(repo)
+          - else
+            = link_to 'Add', add_repository_path(repo)
+

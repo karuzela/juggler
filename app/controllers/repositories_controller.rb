@@ -4,7 +4,7 @@ class RepositoriesController < ApplicationController
   protect_from_forgery except: :github_callback
 
   def index
-    @repositories = Repository.order(name: :asc).all
+    @repositories = Repository.order(synchronized: :desc).order(name: :asc)
   end
 
   def add
