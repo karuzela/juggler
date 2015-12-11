@@ -1,6 +1,6 @@
 %h2
   %b Repository:
-  = @pull_request.repository.name
+  = @pull_request.repository.full_name
 %h3= @pull_request.title
 
 - if @pull_request.reviewer
