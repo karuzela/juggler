@@ -1,6 +1,6 @@
 class PullRequestsController < ApplicationController
   before_action :authenticate_user!
-  before_filter :load_pull_request, only: [:show, :take, :resolve]
+  before_action :load_pull_request, only: [:show, :take, :resolve]
 
   def show
   end
