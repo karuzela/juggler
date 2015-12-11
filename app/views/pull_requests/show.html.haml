@@ -1,0 +1,12 @@
+%h2
+  %b Repository:
+  = @pull_request.repository.name
+%h3= @pull_request.title
+
+- if @pull_request.reviewer
+  %b Reviewer:
+  = @pull_request.reviewer.name
+-else
+  = link_to 'Take', take_pull_request_path(@pull_request), method: :patch, class: 'btn btn-default'
+%br
+= @pull_request.body

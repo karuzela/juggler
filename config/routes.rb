@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pull_requests do
+    patch :take, on: :member
+  end
+
   root to: 'dashboard#index'
 
   devise_for :users
