@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :verify_access!
 
   def index
     @users = User.all
@@ -17,5 +18,11 @@ class UsersController < ApplicationController
     else
       render action: 'new'
     end
+  end
+
+  private
+
+  def verify_access!
+    authorize!(:manage, User)
   end
 end

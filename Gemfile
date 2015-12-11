@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
-gem 'devise', '~> 3.5.3'
+gem "cancancan", "~> 1.13.1"
+gem "devise", "~> 3.5.3"
 gem "figaro"
 gem 'haml', '~> 4.0.7'
 gem "jquery-rails"

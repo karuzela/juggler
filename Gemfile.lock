@@ -46,6 +46,7 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
+    cancancan (1.13.1)
     coderay (1.1.0)
     concurrent-ruby (1.0.0)
     debug_inspector (0.0.2)
@@ -178,6 +179,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  cancancan (~> 1.13.1)
   devise (~> 3.5.3)
   factory_girl_rails
   figaro
