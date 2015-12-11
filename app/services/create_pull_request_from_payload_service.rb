@@ -5,8 +5,15 @@ class CreatePullRequestFromPayloadService
   end
 
   def call
-    PullRequest.find_or_create_by(pr_params(@payload))
-    send_slack_info_message
+    if @payload['pull_request'].present?
+      pr = PullRequest.find_by_github_id(@payload['pull_request']['id'])
+      if pr.nil?
+        PullRequest.create(pr_params(@payload))
+        send_slack_info_message
+      else
+        pr.update_attribute :state, 'pending'
+      end
+    end
   end
 
   private
@@ -14,10 +21,11 @@ class CreatePullRequestFromPayloadService
   def pr_params(payload)
     pr_hash = {}
     pr_hash[:state] = 'pending'
-    pr_hash[:opened_at] = payload['pull_request']['created_at'] if payload['pull_request'].present?
-    pr_hash[:title] = payload['pull_request']['title'] if payload['pull_request'].present?
-    pr_hash[:body] = payload['pull_request']['body'] if payload['pull_request'].present?
-    pr_hash[:repository_id] = Repository.find_by_github_id(payload['repository']['id']).id if payload['repository'].present?
+    pr_hash[:github_id] = payload['pull_request']['id']
+    pr_hash[:opened_at] = payload['pull_request']['created_at']
+    pr_hash[:title] = payload['pull_request']['title']
+    pr_hash[:body] = payload['pull_request']['body']
+    pr_hash[:repository_id] = Repository.find_by_github_id(payload['repository']['id']).id
     return pr_hash
   end
 
