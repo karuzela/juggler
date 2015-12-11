@@ -1,10 +1,6 @@
 class PullRequestsController < ApplicationController
   before_action :authenticate_user!
-  before_filter :set_pull_request, only: [:show, :take, :resolve]
-
-  def index
-    @pull_requests = PullRequest.all
-  end
+  before_filter :load_pull_request, only: [:show, :take, :resolve]
 
   def show
   end
@@ -32,7 +28,7 @@ class PullRequestsController < ApplicationController
 
   private
 
-  def set_pull_request
+  def load_pull_request
     @pull_request = PullRequest.find(params[:id])
   end
 
