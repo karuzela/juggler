@@ -1,5 +1,5 @@
-source 'https://rubygems.org'
-ruby '2.2.3'
+source "https://rubygems.org"
+ruby "2.2.1"
 
 gem "cancancan", "~> 1.13.1"
 gem "devise", "~> 3.5.3"
