@@ -1,6 +1,7 @@
 SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
 SLACK_DEFAULT_CHANNEL: '#collective-review'
 GITHUB_ACCESS_TOKEN: token
+REMAIND_AFTER_HOURS: '3'
 
 MAIL_SMTP_SETTINGS_FROM: 'cr@visuality.pl'
 ACTION_MAILER_HOST: 'localhost:3000'
