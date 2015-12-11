@@ -1,18 +1,19 @@
-%h1 Dashboard
+%section.content-header
+  %h1
+    Dashboard
+    %small beta version
 
-%table
-  %tr
-    %th Title
-    %th Repository
-    %th Reviewer
-    %th Opened at
-    %th State
+%section.content
   - @pull_requests.each do |pull_request|
-    %tr
-      %td= link_to pull_request.title, pull_request_path(pull_request)
-      %td= pull_request.repository.name
-      %td
+    .box.box-default
+      .box-header.with-border
+        %h3.box-title
+          = link_to pull_request.title, pull_request_path(pull_request)
+          %small
+            = link_to pull_request.repository.name, pull_request.repository.html_url, target: '_blank'
+
+      .box-body
         - if pull_request.reviewer.present?
           = pull_request.reviewer.name
-      %td= pull_request.opened_at
-      %td= pull_request.state
+        = pull_request.opened_at
+        = pull_request.state

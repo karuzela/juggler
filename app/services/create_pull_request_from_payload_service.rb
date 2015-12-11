@@ -8,13 +8,14 @@ class CreatePullRequestFromPayloadService
     if @payload['pull_request'].present?
       @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
       if @pull_request.nil?
-        PullRequest.create(pr_params(@payload))
+        @pull_request = PullRequest.create(pr_params(@payload))
       else
         @pull_request.update_attribute :state, 'pending'
       end
+
+      send_slack_info_message
+      send_email_to_reviewer
     end
-    send_slack_info_message
-    send_email_to_reviewer
   end
 
   private
