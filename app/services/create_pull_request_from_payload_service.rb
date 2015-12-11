@@ -6,6 +6,7 @@ class CreatePullRequestFromPayloadService
 
   def call
     PullRequest.find_or_create_by(pr_params(@payload))
+    send_slack_info_message
   end
 
   private
@@ -21,4 +22,8 @@ class CreatePullRequestFromPayloadService
     return pr_hash
   end
 
+  def send_slack_info_message
+    slack = SlackClient.new()
+    slack.send_message("New PR to review")
+  end
 end
