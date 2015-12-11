@@ -4,7 +4,7 @@ class AutoAssignService
   end
 
   def call
-    return false if @pull_request.reviewer? || !@pull_request.pending?
+    return false if @pull_request.reviewer || !@pull_request.pending?
     update_pull_request
     send_slack_message
     send_email_messsage
@@ -18,10 +18,11 @@ class AutoAssignService
   end
 
   def send_slack_message
-    SlackClient.new("You are auto assigned to PR review", @pull_request.reviewer.slack_username)
+    slack = SlackClient.new()
+    slack.send_message("You are auto assigned to PR review", @pull_request.reviewer.slack_username)
   end
 
   def send_email_messsage
-
+    NotyficationMailer.auto_assign(@pull_request).deliver_now
   end
 end

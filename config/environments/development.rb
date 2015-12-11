@@ -38,6 +38,19 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.action_mailer.default_url_options = { host: ENV["ACTION_MAILER_HOST"] }
+  config.action_mailer.asset_host = ENV["ACTION_MAILER_ASSET_HOST"]
+  config.action_mailer.perform_deliveries = true
+  ActionMailer::Base.delivery_method = ENV['ACTION_MAILER_DELIVERY_METHOD']
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  if ENV['ACTION_MAILER_DELIVERY_METHOD'] == 'smtp'
+    config.action_mailer.delivery_method = :smtp
+    ActionMailer::Base.smtp_settings = {
+      address: ENV["MAIL_SMTP_SETTINGS_ADDRESS"],
+      port: ENV["MAIL_SMTP_SETTINGS_PORT"],
+      enable_starttls_auto: ENV["MAIL_SMTP_SETTINGS_ENABLE_STARTTLS_AUTO"] }
+  end
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 end
