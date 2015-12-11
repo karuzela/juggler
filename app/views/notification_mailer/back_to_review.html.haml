@@ -1,2 +1,2 @@
-= link_to 'Pull request', pull_request_url(@pull_request)
+= link_to 'Pull request', pull_request_url(@pull_request, host: ENV['ACTION_MAILER_HOST'])
 %span back review
