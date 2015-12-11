@@ -37,7 +37,10 @@ ActiveRecord::Schema.define(version: 20151211110834) do
     t.boolean  "synchronized", default: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.integer  "github_id"
   end
+
+  add_index "repositories", ["github_id"], name: "index_repositories_on_github_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
