@@ -15,5 +15,5 @@
       .box-body
         - if pull_request.reviewer.present?
           = pull_request.reviewer.name
-        = pull_request.opened_at
+        = distance_of_time_in_words(pull_request.opened_at, Time.now)
         = pull_request.state
