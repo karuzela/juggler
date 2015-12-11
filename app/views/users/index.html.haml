@@ -1,0 +1,8 @@
+%h1 Users
+
+= link_to 'Add new', new_user_path
+
+%table
+  - @users.each do |user|
+    %tr
+      %td= user.email

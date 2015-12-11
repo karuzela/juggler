@@ -11,4 +11,7 @@
       = flash[:notice]
     - if flash[:alert]
       = flash[:alert]
+    - if user_signed_in?
+      = current_user.email
+      = link_to 'Logout', destroy_user_session_path, method: :delete
     = yield
