@@ -1,1 +1,6 @@
 %h1 Dashboard
+
+%table
+  - @pull_requests.each do |pull_request|
+    %tr
+      %td= pull_request.repository.name
