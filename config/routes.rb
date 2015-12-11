@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
   resources :repositories do
     member do
-      post 'add'
-      post 'remove'
+      get 'add'
+      get 'remove'
     end
     collection do
       get 'refresh'

@@ -3,14 +3,15 @@ ruby '2.2.3'
 
 gem "cancancan", "~> 1.13.1"
 gem "devise", "~> 3.5.3"
-gem "figaro"
+gem "figaro", "~> 1.1.1"
 gem 'haml', '~> 4.0.7'
-gem "jquery-rails"
+gem "jquery-rails", "~> 4.0.5"
 gem "octokit", "~> 4.0"
 gem 'pg', '~> 0.15'
 gem 'rails', '4.2.5'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem "sidekiq", "~> 4.0.1"
 gem "simple_form", "~> 3.2.0"
 gem 'slack-notifier'
 
