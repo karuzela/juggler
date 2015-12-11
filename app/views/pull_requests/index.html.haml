@@ -1,0 +1,17 @@
+%h1="Pull requests list"
+
+%table
+  %thead
+    %tr
+      %th="Repository"
+      %th="Title"
+      %th="State"
+      %th="Actions"
+  %tbody
+    - @pull_requests.each do |pr|
+      %tr
+        %td= pr.repository.try(:full_name)
+        %td= pr.title
+        %td= pr.state
+        %td
+          =link_to 'Show', pull_request_path(pr)

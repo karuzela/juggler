@@ -3,7 +3,7 @@ class PullRequestsController < ApplicationController
   before_filter :set_pull_request, only: [:show, :take]
 
   def index
-
+    @pull_requests = PullRequest.all
   end
 
   def show
