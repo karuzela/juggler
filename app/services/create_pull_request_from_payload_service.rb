@@ -5,8 +5,9 @@ class CreatePullRequestFromPayloadService
   end
 
   def call
-    PullRequest.find_or_create_by(pr_params(@payload))
+    @pull_request = PullRequest.find_or_create_by(pr_params(@payload))
     send_slack_info_message
+    send_email_to_reviewer
   end
 
   private
@@ -23,6 +24,17 @@ class CreatePullRequestFromPayloadService
 
   def send_slack_info_message
     slack = SlackClient.new()
-    slack.send_message("New PR to review")
+    url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
+    if @pull_request.reviewer
+      slack.send_message("[PR](#{url}) back after correction", @pull_request.reviewer.slack_channel)
+      ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
+    else
+      slack.send_message("New [PR](#{url}) to review")
+    end
+  end
+
+  def send_email_to_reviewer
+    return unless @pull_request.reviewer
+    NotificationMailer.back_to_review(@pull_request).deliver_now
   end
 end

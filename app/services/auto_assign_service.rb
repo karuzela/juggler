@@ -20,7 +20,8 @@ class AutoAssignService
 
   def send_slack_message
     slack = SlackClient.new()
-    slack.send_message("You are auto assigned to PR review", @pull_request.reviewer.slack_channel)
+    url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
+    slack.send_message("You are auto assigned to [PR](#{url}) review", @pull_request.reviewer.slack_channel)
   end
 
   def send_email_messsage
