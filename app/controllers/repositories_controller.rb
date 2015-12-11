@@ -7,17 +7,17 @@ class RepositoriesController < ApplicationController
   end
 
   def add
-    SynchronizeGithubRepositoryService.new(@repository).call
+    SynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], repositories_url).call
     redirect_to repositories_path, notice: 'Repository was synchronized'
   end
 
   def remove
-    UnsynchronizeGithubRepositoryService.new(@repository).call
+    UnsynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], repositories_url).call
     redirect_to repositories_path, notice: 'Repository was unsynchronized'
   end
 
   def refresh
-    #GetGithubRepositoriesListService.new(current_user.github_access_token).call
+    GetGithubRepositoriesListService.new(ENV['GITHUB_ACCESS_TOKEN']).call
     redirect_to repositories_path, notice: 'Repositories list was refreshed'
   end
 
