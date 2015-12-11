@@ -1,6 +1,5 @@
 class RepositoriesController < ApplicationController
-
-  before_action :set_repository, only: [:add, :remove]
+  before_action :load_repository, only: [:add, :remove]
   protect_from_forgery except: :github_callback
 
   def index
@@ -30,7 +29,7 @@ class RepositoriesController < ApplicationController
 
   private
 
-  def set_repository
+  def load_repository
     @repository = Repository.find(params[:id])
   end
 end
