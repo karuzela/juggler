@@ -20,10 +20,10 @@ class PullRequestsController < ApplicationController
 
   def resolve
     if params[:commit] == 'Accept'
-      AcceptPullRequestService.new(@pull_request).call
+      AcceptPullRequestService.new(@pull_request, resolve_params).call
       redirect_to root_path, alert: 'Pull request accepted'
     elsif params[:commit] == 'Reject'
-      RejectPullRequestService.new(@pull_request).call
+      RejectPullRequestService.new(@pull_request, resolve_params).call
       redirect_to root_path, alert: 'Pull request rejected'
     else
       redirect_to root_path, alert: 'Invalid action'
@@ -31,7 +31,12 @@ class PullRequestsController < ApplicationController
   end
 
   private
+
   def set_pull_request
     @pull_request = PullRequest.find(params[:id])
+  end
+
+  def resolve_params
+    params[:pull_request].permit(:comment)
   end
 end
