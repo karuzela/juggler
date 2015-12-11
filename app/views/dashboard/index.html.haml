@@ -1,6 +1,13 @@
-%h1 Dashboard
+%section.content-header
+  %h1
+    Dashboard
+    %small beta version
 
-%table
+%section.content
   - @pull_requests.each do |pull_request|
-    %tr
-      %td= pull_request.repository.name
+    .box.box-default
+      .box-header.with-border
+        %h3.box-title
+          = pull_request.repository.name
+      .box-body
+        The pull request description goes here

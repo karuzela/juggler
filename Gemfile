@@ -4,6 +4,7 @@ ruby "2.2.1"
 gem "cancancan", "~> 1.13.1"
 gem "devise", "~> 3.5.3"
 gem "figaro", "~> 1.1.1"
+gem "font-awesome-rails"
 gem 'haml', '~> 4.0.7'
 gem "jquery-rails", "~> 4.0.5"
 gem "octokit", "~> 4.0"
