@@ -10,7 +10,7 @@
   - @pull_requests.each do |pull_request|
     %tr
       %td= link_to pull_request.title, pull_request_path(pull_request)
-      %td= pull_request.repository.name
+      %td= link_to pull_request.repository.name, pull_request.repository.html_url, target: '_blank'
       %td
         - if pull_request.reviewer.present?
           = pull_request.reviewer.name
