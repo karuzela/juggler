@@ -89,6 +89,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     figaro (1.1.1)
       thor (~> 0.14)
+    font-awesome-rails (4.5.0.0)
+      railties (>= 3.2, < 5.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -229,6 +231,7 @@ DEPENDENCIES
   devise (~> 3.5.3)
   factory_girl_rails
   figaro (~> 1.1.1)
+  font-awesome-rails
   haml (~> 4.0.7)
   jquery-rails (~> 4.0.5)
   octokit (~> 4.0)
