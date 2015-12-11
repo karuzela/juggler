@@ -1,0 +1,12 @@
+.ruby-version
+.rbenv-gemset
+.DS_Store
+/.bundle
+/.gems/
+/.idea/
+/config/application.yml
+/log/*
+!/log/.keep
+/tmp
+/vendor/assets
+/public/assets/**
