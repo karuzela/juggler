@@ -1,6 +1,7 @@
 class AcceptPullRequestService
-  def initialize(pull_request)
+  def initialize(pull_request, params)
     @pull_request = pull_request
+    @params = params
   end
 
   def call
