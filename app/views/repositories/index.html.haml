@@ -1,23 +1,34 @@
-%h1="Repositories list"
+= link_to 'Refresh repositories list', refresh_repositories_path
 
-=link_to 'Refresh repositories list', refresh_repositories_path
+%h2 Synchronized repositories
 
 %table
   %thead
     %tr
-      %th="Repository"
-      %th="Owner"
-      %th="Is synchronized?"
-      %th="Actions"
+      %th Repository
+      %th Owner
+      %th Actions
   %tbody
-    - @repositories.each do |repo|
+    - @synchronized_repositories.each do |repo|
       %tr
         %td= link_to repo.full_name, repo.html_url, target: '_blank'
         %td= repo.owner
-        %td= repo.synchronized
         %td
-          - if repo.synchronized?
-            = link_to 'Remove', remove_repository_path(repo)
-          - else
-            = link_to 'Add', add_repository_path(repo)
+          = link_to 'Remove', remove_repository_path(repo)
+
+%h2 Not synchronized repositories
+
+%table
+  %thead
+    %tr
+      %th Repository
+      %th Owner
+      %th Actions
+  %tbody
+    - @not_synchronized_repositories.each do |repo|
+      %tr
+        %td= link_to repo.full_name, repo.html_url, target: '_blank'
+        %td= repo.owner
+        %td
+          = link_to 'Add', add_repository_path(repo)
 

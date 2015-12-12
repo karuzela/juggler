@@ -3,6 +3,8 @@ class RepositoriesController < ApplicationController
   protect_from_forgery except: :github_callback
 
   def index
+    @synchronized_repositories = Repository.where(synchronized: true).order(name: :asc)
+    @not_synchronized_repositories = Repository.where(synchronized: false).order(name: :asc)
     @repositories = Repository.order(synchronized: :desc).order(name: :asc)
   end
 
