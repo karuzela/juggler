@@ -10,10 +10,10 @@
         %h3.box-title
           = link_to pull_request.title, pull_request_path(pull_request)
           %small
-            = link_to pull_request.repository.name, pull_request.repository.html_url, target: '_blank'
+            = link_to pull_request.repository.full_name, pull_request.repository.html_url, target: '_blank'
 
       .box-body
         - if pull_request.reviewer.present?
           = pull_request.reviewer.name
-        = pull_request.opened_at
+        = distance_of_time_in_words(pull_request.opened_at, Time.now)
         = pull_request.state

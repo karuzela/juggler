@@ -1,9 +1,10 @@
 class RepositoriesController < ApplicationController
-
-  before_action :set_repository, only: [:add, :remove]
+  before_action :load_repository, only: [:add, :remove]
   protect_from_forgery except: :github_callback
 
   def index
+    @synchronized_repositories = Repository.where(synchronized: true).order(name: :asc)
+    @not_synchronized_repositories = Repository.where(synchronized: false).order(name: :asc)
     @repositories = Repository.order(synchronized: :desc).order(name: :asc)
   end
 
@@ -30,7 +31,7 @@ class RepositoriesController < ApplicationController
 
   private
 
-  def set_repository
+  def load_repository
     @repository = Repository.find(params[:id])
   end
 end

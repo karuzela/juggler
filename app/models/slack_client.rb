@@ -3,7 +3,7 @@ class SlackClient
   def initialize
     @notifier = Slack::Notifier.new ENV["SLACK_WEBHOOK_URL"],
       channel: ENV["SLACK_DEFAULT_CHANNEL"],
-      username: 'bot',
+      username: 'juggler',
       icon_emoji: ":robot_face:"
   end
 
