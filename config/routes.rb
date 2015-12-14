@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
-  resources :repositories, except: [:new, :create, :show, :destroy] do
+  resources :repositories, except: [:new, :create, :destroy] do
     member do
       get :add
       get :remove
+      patch :authorized_reviewers
     end
     collection do
       get :refresh

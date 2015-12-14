@@ -1,0 +1,16 @@
+%h2= @repository.full_name
+
+= form_tag authorized_reviewers_repository_path(@repository), method: :patch do
+  %table
+    %thead
+      %tr
+        %th User
+        %th Email
+        %th Authorized reviewers
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.name
+          %td= user.email
+          %td= check_box_tag "reviewer_ids[]", user.id, @repository.authorized_reviewer_ids.include?(user.id)
+  = submit_tag "Apply"
