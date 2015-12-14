@@ -20,10 +20,10 @@ class PullRequestsController < ApplicationController
     authorize!(:resolve, @pull_request)
 
     if params[:commit] == 'Accept'
-      AcceptPullRequestService.new(@pull_request, resolve_params).call
+      AcceptPullRequestService.new(@pull_request, resolve_params, current_user).call
       redirect_to root_path, alert: 'Pull request accepted'
     elsif params[:commit] == 'Reject'
-      RejectPullRequestService.new(@pull_request, resolve_params).call
+      RejectPullRequestService.new(@pull_request, resolve_params, current_user).call
       redirect_to root_path, alert: 'Pull request rejected'
     else
       redirect_to root_path, alert: 'Invalid action'
