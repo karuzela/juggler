@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_access!, except: [:github_connect]
+  before_action :verify_access!, only: [:index, :new, :create]
 
   def index
     @users = User.all
