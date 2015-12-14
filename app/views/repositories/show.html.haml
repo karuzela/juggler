@@ -1,6 +1,6 @@
 %h2= @repository.full_name
 
-= form_tag authorized_reviewers_repository_path(@repository), method: :patch do
+= form_tag repository_reviewers_path(@repository), method: :patch do
   %table
     %thead
       %tr

@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     member do
       get :add
       get :remove
-      patch :authorized_reviewers
+      resources :repository_reviewers, only: [] do
+        patch :update, on: :collection
+      end
     end
     collection do
       get :refresh
