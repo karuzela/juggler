@@ -20,6 +20,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def github_connect
+    if ConnectWithGithubService.new(current_user, params[:code]).call.nil?
+      redirect_to root_path, alert: 'There was an error while connecting to Github. Account not connected.'
+    else
+      redirect_to root_path, notice: 'Your account was successfully connected'
+    end
+  end
+
   private
 
   def verify_access!
