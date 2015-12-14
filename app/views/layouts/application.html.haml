@@ -96,6 +96,8 @@
       / TODO: replace dirty walkaround:
       - if current_user
         .content-wrapper
+          .container
+            = yield
       - else
         .content-wrapper{style: "background-color: #2f89c6; background-image: url(#{image_url('background.png')}); background-repeat-y: no-repeat"}
           .container
