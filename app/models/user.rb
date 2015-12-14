@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   def slack_channel
     "@#{slack_username}"
   end
+
+  def connected_with_github?
+    github_access_token.present?
+  end
 end
