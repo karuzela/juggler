@@ -14,6 +14,6 @@ class RejectPullRequestService
   end
 
   def send_comment_to_github
-    @client.add_comment(@pull_request.repository.full_name, @pull_request.issue_number, 'Rejected: ' + @pull_request.body)
+    @client.add_comment(@pull_request.repository.full_name, @pull_request.issue_number, 'Rejected: ' + @params[:comment])
   end
 end
