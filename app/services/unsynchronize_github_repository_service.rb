@@ -9,6 +9,8 @@ class UnsynchronizeGithubRepositoryService
   def call
     @client.unsubscribe(topic, @callback)
     @repo.update_attribute :synchronized, false
+  rescue Octokit::UnprocessableEntity => e
+    return false
   end
 
   private
