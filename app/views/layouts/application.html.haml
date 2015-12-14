@@ -94,24 +94,27 @@
       / Full Width Column
 
       / TODO: replace dirty walkaround:
-      .content-wrapper{style: "#{current_user ? '': 'background-color: #3498db'}"}
-        .container
-          - if flash[:notice]
-            .alert.alert-success.alert-dismissible{style: "margin-top:10px"}
-              %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} ×
-              %h4
-                %i.icon.fa.fa-check
-                Info:
-              = flash[:notice]
-          - if flash[:alert]
-            .alert.alert-danger.alert-dismissible{style: "margin-top:10px"}
-              %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} ×
-              %h4
-                %i.icon.fa.fa-ban
-                Alert!
-              = flash[:alert]
+      - if current_user
+        .content-wrapper
+      - else
+        .content-wrapper{style: "background-color: #2f89c6; background-image: url(#{image_url('background.png')}); background-repeat-y: no-repeat"}
+          .container
+            - if flash[:notice]
+              .alert.alert-success.alert-dismissible{style: "margin-top:10px"}
+                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} ×
+                %h4
+                  %i.icon.fa.fa-check
+                  Info:
+                = flash[:notice]
+            - if flash[:alert]
+              .alert.alert-danger.alert-dismissible{style: "margin-top:10px"}
+                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} ×
+                %h4
+                  %i.icon.fa.fa-ban
+                  Alert!
+                = flash[:alert]
 
-          = yield
+            = yield
         / /.container
       / /.content-wrapper
       %footer.main-footer

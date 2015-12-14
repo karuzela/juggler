@@ -16,6 +16,22 @@
 / <%= render "devise/shared/links" %>
 %section.content{style: "height: 650px;"}
   .row{style: "margin-top: 50px"}
+    #container.container{:style => "position:absolute; left: -20px"}
+      %ul#scene.scene{"data-invert-x" => "true", "data-scalar-x" => "4", "data-scalar-y" => "0"}
+        %li.layer{"data-depth" => "1.60"}
+          = image_tag "tree.png", {:style => "position:absolute; left: 50%; margin-left: 850px; top:150px", :width => "100px"}
+        %li.layer{"data-depth" => "0.80"}
+          = image_tag "tree.png", { :style => "position:absolute; left: 50%; margin-left: 1250px; top:40px", :width => "170px"}
+        %li.layer{"data-depth" => "0.60"}
+          = image_tag "tree.png", { :style => "position:absolute; top:-50px; left: 300px"}
+        %li.layer{"data-depth" => "1.60"}
+          = image_tag "tree.png", { :style => "position:absolute; left: 50%; margin-left: 150px; top:150px", :width => "100px"}
+      %ul#scene2.scene{"data-invert-x" => "false", "data-scalar-y" => "0"}
+        %li.layer{"data-depth" => "0.25"}
+          = image_tag "grass.png", { :style => "position:absolute; left: 50%; margin-left: 650px; top:450px"}
+        %li.layer{"data-depth" => "0.15"}
+          = image_tag "grass.png", { :style => "position:absolute; left: 300px; top:400px"}
+
     .col-md-6{style: "margin-top:100px"}
       %h1{style: "color: #fff"}
         = "Manage Pull Requests in your team projects."
@@ -28,3 +44,10 @@
         = f.submit "Log in", class: "btn btn-lg btn-warning pull-right"
     .col-md-6
       = image_tag "juggler_ladybird.png"
+
+:javascript
+  // Pretty simple huh?
+  var scene = document.getElementById('scene');
+  var scene2 = document.getElementById('scene2');
+  var parallax = new Parallax(scene);
+  var parallax2 = new Parallax(scene2);
