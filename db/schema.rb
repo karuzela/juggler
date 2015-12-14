@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 20151214113418) do
 
   add_index "repositories", ["github_id"], name: "index_repositories_on_github_id", using: :btree
 
+  create_table "repository_reviewers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "repository_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false

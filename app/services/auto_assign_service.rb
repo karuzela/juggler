@@ -15,20 +15,30 @@ class AutoAssignService
 
   private
   def update_pull_request
-    @pull_request.update(reviewer: User.all.sample)
+    @reviewer = @pull_request.repository
+      .authorized_reviewers
+      .joins("LEFT JOIN pull_requests ON users.id = pull_requests.reviewer_id")
+      .select('users.*, count(pull_requests.id) as assigned_count')
+      .group('users.id')
+      .order('assigned_count asc')
+      .first
+    @pull_request.update(reviewer: @reviewer)
   end
 
   def send_slack_message
+    return unless @reviewer
     slack = SlackClient.new()
     url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
     slack.send_message("You are auto assigned to [PR](#{url}) review", @pull_request.reviewer.slack_channel)
   end
 
   def send_email_messsage
+    return unless @reviewer
     NotificationMailer.auto_assign(@pull_request).deliver_now
   end
 
   def set_remainder
+    return unless @reviewer
     ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
   end
 end
