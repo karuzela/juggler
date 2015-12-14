@@ -12,7 +12,7 @@ class PullRequestsController < ApplicationController
       ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
       redirect_to :back
     else
-      redirect_to :back, alert: 'You can\'t be assigne to this pull request'
+      redirect_to :back, alert: 'You can\'t be assigned to this pull request'
     end
   end
 
@@ -21,10 +21,10 @@ class PullRequestsController < ApplicationController
 
     if params[:commit] == 'Accept'
       AcceptPullRequestService.new(@pull_request, resolve_params, current_user).call
-      redirect_to root_path, alert: 'Pull request accepted'
+      redirect_to root_path, notice: 'Pull request accepted'
     elsif params[:commit] == 'Reject'
       RejectPullRequestService.new(@pull_request, resolve_params, current_user).call
-      redirect_to root_path, alert: 'Pull request rejected'
+      redirect_to root_path, notice: 'Pull request rejected'
     else
       redirect_to root_path, alert: 'Invalid action'
     end
