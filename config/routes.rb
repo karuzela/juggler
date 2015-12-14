@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
 
   devise_for :users
-  resources :users, only: [:index, :new, :create]
+  resources :users, only: [:index, :new, :create] do
+    get 'github_connect', on: :collection
+  end
 end

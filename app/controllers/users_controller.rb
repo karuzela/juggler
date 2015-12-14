@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_access!
+  before_action :verify_access!, only: [:index, :new, :create]
 
   def index
     @users = User.all
@@ -17,6 +17,14 @@ class UsersController < ApplicationController
       redirect_to users_path
     else
       render action: 'new'
+    end
+  end
+
+  def github_connect
+    if ConnectWithGithubService.new(current_user, params[:code]).call.nil?
+      redirect_to root_path, alert: 'There was an error while connecting to Github. Account not connected.'
+    else
+      redirect_to root_path, notice: 'Your account was successfully connected'
     end
   end
 

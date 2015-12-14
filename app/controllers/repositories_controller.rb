@@ -18,13 +18,19 @@ class RepositoriesController < ApplicationController
   end
 
   def add
-    SynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], github_callback_repositories_url).call
-    redirect_to repositories_path, notice: 'Repository was synchronized'
-  end
+    if SynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], github_callback_repositories_url).call
+      redirect_to repositories_path, notice: 'Repository was synchronized'
+    else
+      redirect_to repositories_path, alert: 'Error. Repository not synchronized. Check your permissions.'
+    end
+   end
 
   def remove
-    UnsynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], github_callback_repositories_url).call
-    redirect_to repositories_path, notice: 'Repository was unsynchronized'
+    if UnsynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], github_callback_repositories_url).call
+      redirect_to repositories_path, notice: 'Repository was unsynchronized'
+    else
+      redirect_to repositories_path, alert: 'Error. Check your permissions.'
+    end
   end
 
   def refresh
