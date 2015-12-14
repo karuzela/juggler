@@ -7,18 +7,23 @@ class CreatePullRequestFromPayloadService
   def call
     if @payload['pull_request'].present?
       @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
-      if @pull_request.nil?
-        @pull_request = PullRequest.create(pr_params(@payload))
-      else
-        @pull_request.update_attribute :state, 'pending'
+      if pr_opened?
+        if @pull_request.nil?
+          @pull_request = PullRequest.create(pr_params(@payload))
+        else
+          @pull_request.update_attribute :state, 'pending'
+        end
+        send_slack_info_message
+        send_email_to_reviewer
       end
-
-      send_slack_info_message
-      send_email_to_reviewer
     end
   end
 
   private
+
+  def pr_opened?
+    ['opened', 'reopened', 'synchronize'].include? @payload['action']
+  end
 
   def pr_params(payload)
     pr_hash = {}
