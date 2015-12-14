@@ -13,7 +13,11 @@
 
 - if current_user == @pull_request.reviewer
   = form_tag resolve_pull_request_path(@pull_request), method: :patch do
-    = text_area_tag 'pull_request[comment]', '', rows: 10, cols: 80
-    %br
-    = submit_tag 'Accept'
-    = submit_tag 'Reject'
+    - if current_user.connected_with_github?
+      = text_area_tag 'pull_request[comment]', '', rows: 10, cols: 80
+      %br
+      = submit_tag 'Accept'
+      = submit_tag 'Reject'
+    - else
+      %div.alert.alert-info
+        You can't add new comment. Plase connect your account with your Github account using "Connect with Github" button.
