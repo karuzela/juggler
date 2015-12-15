@@ -43,11 +43,20 @@ class CreatePullRequestFromPayloadService
   def send_slack_info_message
     slack = SlackClient.new()
     url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
+    attachments = [SlackAttachmentBuilder.build(@pull_request)]
+
     if @pull_request.reviewer
-      slack.send_message("[PR](#{url}) back after correction", @pull_request.reviewer.slack_channel)
+      slack.send_message(
+        "Hey! This pull request was updated. [Click here for details](#{url})",
+        attachments: attachments,
+        channel: @pull_request.reviewer.slack_channel
+      )
       ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
     else
-      slack.send_message("New [PR](#{url}) to review")
+      slack.send_message(
+        "Greetings *Visuality Team*. New pull request is ready for code review. [Click here to claim it](#{url})",
+        attachments: attachments
+      )
     end
   end
 
