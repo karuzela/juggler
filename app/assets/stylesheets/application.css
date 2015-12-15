@@ -27,3 +27,6 @@
 .nav-tabs-custom>.nav-tabs>li.not_synched.active {
   border-top-color: red;
 }
+.pr-status .label{
+  white-space:initial;
+}
