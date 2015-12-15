@@ -1,7 +1,12 @@
 %h2
   %b Repository:
   = @pull_request.repository.full_name
-%h3= @pull_request.title
+%h3
+  = @pull_request.title
+  - if @pull_request.issue_number
+    = "##{@pull_request.issue_number}"
+  - if @pull_request.url.present?
+    = link_to 'View on Github', @pull_request.url, target: '_blank'
 
 - if @pull_request.reviewer
   %b Reviewer:
