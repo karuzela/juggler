@@ -1,3 +1,3 @@
-# Collective Review
+# Juggler
 
-Tool for managing code review for organization projects.
+Online tool for managing code reviews inside larger teams

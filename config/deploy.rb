@@ -1,14 +1,14 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'collective-review'
-set :repo_url, 'git@github.com:visualitypl/collective-review.git'
+set :application, 'juggler'
+set :repo_url, 'git@github.com:visualitypl/juggler.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, '/home/ronin/apps/collective-review'
+set :deploy_to, '/home/ronin/apps/juggler'
 
 # Default value for :scm is :git
 # set :scm, :git
