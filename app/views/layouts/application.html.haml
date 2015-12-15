@@ -99,7 +99,7 @@
                   %i.icon.fa.fa-check
                   Info:
                 = flash[:notice]
-            - if flash[:alert]
+            - if flash[:alert].present?
               .alert.alert-danger.alert-dismissible{style: "margin-top:10px"}
                 %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} ×
                 %h4
