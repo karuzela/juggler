@@ -30,3 +30,6 @@
 .pr-status .label{
   white-space:initial;
 }
+.pr-title{
+  width: 100%;
+}
