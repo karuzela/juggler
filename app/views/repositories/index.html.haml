@@ -1,34 +1,55 @@
-= link_to 'Refresh repositories list', refresh_repositories_path
+%section.content-header
+  %h1
+    Manage Repositories
+    .pull-right
+      = link_to 'Refresh repositories list', refresh_repositories_path, class: "btn btn-primary"
+%section.content
 
-%h2 Synchronized repositories
-
-%table
-  %thead
-    %tr
-      %th Repository
-      %th Owner
-      %th Actions
-  %tbody
-    - @synchronized_repositories.each do |repo|
-      %tr
-        %td= link_to repo.full_name, repo, target: '_blank'
-        %td= repo.owner
-        %td
-          = link_to 'Remove', remove_repository_path(repo)
-
-%h2 Not synchronized repositories
-
-%table
-  %thead
-    %tr
-      %th Repository
-      %th Owner
-      %th Actions
-  %tbody
-    - @not_synchronized_repositories.each do |repo|
-      %tr
-        %td= link_to repo.full_name, repo, target: '_blank'
-        %td= repo.owner
-        %td
-          = link_to 'Add', add_repository_path(repo)
-
+  .nav-tabs-custom
+    %ul.nav.nav-tabs
+      %li.active
+        %a{"aria-expanded" => "true", "data-toggle" => "tab", :href => "#tab_1"}
+          Synchronized repositories
+      %li.not_synched
+        %a{"aria-expanded" => "false", "data-toggle" => "tab", :href => "#tab_2"}
+          Not synchronized repositories
+    .tab-content
+      #tab_1.tab-pane.active
+        / /.box-header
+        .box-body
+          .table-responsive
+            %table.table.no-margin
+              %thead
+                %tr
+                  %th Repository
+                  %th Owner
+                  %th Actions
+              %tbody
+                - @synchronized_repositories.each do |repo|
+                  %tr
+                    %td
+                      = link_to repo.full_name, repo, target: '_blank'
+                    %td
+                      = repo.owner
+                    %td
+                      = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-danger"
+      / /.tab-pane
+      #tab_2.tab-pane
+        / /.box-header
+        .box-body
+          .table-responsive
+            %table.table.no-margin
+              %thead
+                %tr
+                  %th Repository
+                  %th Owner
+                  %th Actions
+              %tbody
+                - @not_synchronized_repositories.each do |repo|
+                  %tr
+                    %td
+                      = link_to repo.full_name, repo, target: '_blank'
+                    %td
+                      = repo.owner
+                    %td
+                      = link_to 'Synchronize', add_repository_path(repo), class: "btn btn-xs btn-success"

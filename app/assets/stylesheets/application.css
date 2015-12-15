@@ -24,3 +24,6 @@
 .navbar-nav>.user-menu>.dropdown-menu>li.user-header{
 	height: 100px;
 }
+.nav-tabs-custom>.nav-tabs>li.not_synched.active {
+  border-top-color: red;
+}
