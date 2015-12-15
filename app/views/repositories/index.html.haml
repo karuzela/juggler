@@ -54,7 +54,7 @@
                 - @not_synchronized_repositories.each do |repo|
                   %tr
                     %td
-                      = link_to repo.full_name, repo, target: '_blank'
+                      = link_to repo.full_name, repo.html_url, target: '_blank'
                     %td
                       = repo.owner
                     %td
