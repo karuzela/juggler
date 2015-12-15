@@ -6,7 +6,7 @@
 server 'visuality.pl', user: 'ronin', roles: %w{app db web}
 
 set :rvm_type, :system
-set :rvm_ruby_version, '2.2.1@juggler-review'
+set :rvm_ruby_version, '2.2.1@juggler'
 
 # Configuration
 # =============
