@@ -5,15 +5,30 @@
 
 %section.content
   - @pull_requests.each do |pull_request|
-    .box.box-default
-      .box-header.with-border
-        %h3.box-title
-          = link_to pull_request.title, pull_request_path(pull_request)
-          %small
-            = link_to pull_request.repository.full_name, pull_request.repository.html_url, target: '_blank'
+    .col-md-6
+      .box.pr{ class: "#{pull_request.reviewer ? 'box-default' : 'box-primary'}"}
+        .box-header.with-border
+          %h3.box-title.pr-title
+            = link_to pull_request.title, pull_request_path(pull_request)
+            %small
+              = link_to pull_request.repository.full_name, pull_request.repository.html_url, target: '_blank'
+            .pull-right.pr-status
+              - if pull_request.reviewer
+                %small.label.label-default
+                  = pull_request.state
+              - else
+                %small.label.label-primary
+                  = "unasigned"
 
-      .box-body
-        - if pull_request.reviewer.present?
-          = pull_request.reviewer.name
-        = distance_of_time_in_words(pull_request.opened_at, Time.now)
-        = pull_request.state
+        .box-body
+          - if pull_request.reviewer.present?
+            = "Assigned: "
+            = pull_request.reviewer.name
+            %br
+          - else
+            .pull-right
+              = link_to 'Take', take_pull_request_path(pull_request), method: :patch, class: 'btn btn-primary'
+          .help-block
+            %i.fa.fa-clock-o
+            = distance_of_time_in_words(pull_request.opened_at, Time.now)
+
