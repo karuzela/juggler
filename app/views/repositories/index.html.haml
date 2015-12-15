@@ -23,16 +23,21 @@
                 %tr
                   %th Repository
                   %th Owner
+                  %th Users
                   %th Actions
               %tbody
                 - @synchronized_repositories.each do |repo|
                   %tr
                     %td
-                      = link_to repo.full_name, repo, target: '_blank'
+                      = link_to repo.full_name, repo.html_url, target: '_blank'
                     %td
                       = repo.owner
                     %td
+                      = repo.authorized_reviewers.count
+                    %td
+                      = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
                       = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-danger"
+
       / /.tab-pane
       #tab_2.tab-pane
         / /.box-header
@@ -43,6 +48,7 @@
                 %tr
                   %th Repository
                   %th Owner
+                  %th Users
                   %th Actions
               %tbody
                 - @not_synchronized_repositories.each do |repo|
@@ -52,4 +58,7 @@
                     %td
                       = repo.owner
                     %td
+                      = repo.authorized_reviewers.count
+                    %td
+                      = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
                       = link_to 'Synchronize', add_repository_path(repo), class: "btn btn-xs btn-success"
