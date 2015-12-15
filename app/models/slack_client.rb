@@ -5,7 +5,7 @@ class SlackClient
       ENV["SLACK_WEBHOOK_URL"],
       channel: ENV["SLACK_DEFAULT_CHANNEL"],
       username: 'juggler',
-      icon_emoji: ":robot_face:"
+      icon_emoji: ":juggler:"
     )
   end
 
