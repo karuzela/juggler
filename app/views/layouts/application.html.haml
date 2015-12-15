@@ -1,20 +1,3 @@
-/ !!! 5
-/ %html{ lang: "en" }
-/   %head
-/     %meta{ charset: "utf-8" }
-/     = csrf_meta_tags
-
-/     = stylesheet_link_tag "application", media: "all"
-/     = javascript_include_tag "application"
-/   %body
-/     - if flash[:notice]
-/       = flash[:notice]
-/     - if flash[:alert]
-/       = flash[:alert]
-/     - if user_signed_in?
-/       = current_user.email
-/       = link_to 'Logout', destroy_user_session_path, method: :delete
-/     = yield
 !!!
 %html
   %head
