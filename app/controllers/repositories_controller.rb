@@ -23,7 +23,7 @@ class RepositoriesController < ApplicationController
     else
       redirect_to repositories_path, alert: 'Error. Repository not synchronized. Check your permissions.'
     end
-   end
+  end
 
   def remove
     if UnsynchronizeGithubRepositoryService.new(@repository, ENV['GITHUB_ACCESS_TOKEN'], github_callback_repositories_url).call
@@ -39,7 +39,11 @@ class RepositoriesController < ApplicationController
   end
 
   def github_callback
-    payload = JSON.parse params[:payload]
+    if request.content_type == 'application/json'
+      payload = params
+    else
+      payload = JSON.parse params[:payload].to_s
+    end
     CreatePullRequestFromPayloadService.new(payload).call
     head :ok, content_type: "text/html"
   end
