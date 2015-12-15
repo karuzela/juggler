@@ -1,28 +1,49 @@
-%h2
-  %b Repository:
-  = @pull_request.repository.full_name
-%h3
-  = @pull_request.title
-  - if @pull_request.issue_number
-    = "##{@pull_request.issue_number}"
-  - if @pull_request.url.present?
-    = link_to 'View on Github', @pull_request.url, target: '_blank'
+%section.content-header
+  %h1
+    Pull Request details
+%section.content
+  .row
+    .col-md-6.col-md-offset-3
+      .box.box-primary
+        .box-header.with-border
+          %h3.box-title.pr-title
+            = @pull_request.title
+            - if @pull_request.issue_number
+              = "##{@pull_request.issue_number}"
+            %small
+              = @pull_request.repository.full_name
+            - if @pull_request.url.present?
+              .pull-right
+                = link_to @pull_request.url, target: '_blank', class: "btn btn-xs btn-primary" do
+                  %i.fa.fa-github
+                  = "View on GitHub"
+          - if @pull_request.reviewer
+            = "Assigned: "
+            = @pull_request.reviewer.name
+        - if current_user == @pull_request.reviewer
+          = form_tag resolve_pull_request_path(@pull_request), method: :patch do
+            - if current_user.connected_with_github?
+              .box-body
+                = @pull_request.body
+                .form-group
+                  %label{:for => "exampleInputEmail1"}
+                    Comment:
+                  = text_area_tag 'pull_request[comment]', '', rows: 3, class: "form-control"
+              .box-footer
+                = submit_tag 'Accept', class: "button btn btn-success"
+                = submit_tag 'Reject', class: "button btn btn-danger"
+                .pull-right
+                  = link_to "Cancel", root_path, class: "btn btn-default"
+            - else
+              .box-body
+                You can't add new comment. Plase
+                = link_to_github_connect
+              .box-footer
+                .pull-right
+                  = link_to "Cancel", root_path, class: "btn btn-default"
 
-- if @pull_request.reviewer
-  %b Reviewer:
-  = @pull_request.reviewer.name
-- else
-  = link_to 'Take', take_pull_request_path(@pull_request), method: :patch, class: 'btn btn-default'
-%br
-= @pull_request.body
+        - unless @pull_request.reviewer
+          .box-body
+            = @pull_request.body
+            = link_to 'Take', take_pull_request_path(@pull_request), method: :patch, class: 'btn btn-block btn-primary'
 
-- if current_user == @pull_request.reviewer
-  = form_tag resolve_pull_request_path(@pull_request), method: :patch do
-    - if current_user.connected_with_github?
-      = text_area_tag 'pull_request[comment]', '', rows: 10, cols: 80
-      %br
-      = submit_tag 'Accept'
-      = submit_tag 'Reject'
-    - else
-      %div.alert.alert-info
-        You can't add new comment. Plase connect your account with your Github account using "Connect with Github" button.
