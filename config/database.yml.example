@@ -5,8 +5,8 @@ default: &default
 
 development:
   <<: *default
-  database: collective-review_development
+  database: juggler_development
 
 test:
   <<: *default
-  database: collective-review_test
+  database: juggler_test
