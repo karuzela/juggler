@@ -44,7 +44,7 @@ class RepositoriesController < ApplicationController
     else
       payload = JSON.parse params[:payload].to_s
     end
-    CreatePullRequestFromPayloadService.new(payload).call
+    ParsePayloadService.new(payload).call
     head :ok, content_type: "text/html"
   end
 
