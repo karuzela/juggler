@@ -15,6 +15,7 @@ class ProcessIssueCommentFromPayloadService
   end
 
   def analyze_comment(comment)
+    comment = comment.downcase
     if comment.include? GH_ACCEPT_STRING
       accept_pr  
     elsif comment.include? GH_REJECT_STRING
