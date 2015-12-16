@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   validates_presence_of :name
 
   def slack_channel
+    return unless slack_username.present?
+
     "@#{slack_username}"
   end
 

@@ -2,7 +2,18 @@
 
 = link_to 'Add new', new_user_path
 
-%table
-  - @users.each do |user|
+%section.content
+  %table.table
     %tr
-      %td= user.email
+      %th Name
+      %th E-mail
+      %th Slack
+      %th GitHub
+      %th Admin
+    - @users.each do |user|
+      %tr
+        %td= user.name
+        %td= user.email
+        %td= user.slack_channel
+        %td= user.connected_with_github? ? "yes" : ""
+        %td= user.admin? ? "yes" : ""
