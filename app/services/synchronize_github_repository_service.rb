@@ -7,7 +7,9 @@ class SynchronizeGithubRepositoryService
   end
 
   def call
-    @client.subscribe(topic, @callback)
+    topics.each do |topic|
+      @client.subscribe(topic, @callback)
+    end
     @repo.update_attribute :synchronized, true
   rescue Octokit::UnprocessableEntity => e
     return false
@@ -15,8 +17,8 @@ class SynchronizeGithubRepositoryService
 
   private
 
-  def topic
-    @repo.html_url + '/events/pull_request'
+  def topics
+    Repository.subscribed_events.collect { |x| @repo.html_url + '/events/' + x.to_s }
   end
 
 end

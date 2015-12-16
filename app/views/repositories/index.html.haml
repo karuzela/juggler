@@ -36,6 +36,7 @@
                       = repo.authorized_reviewers.count
                     %td
                       = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
+                      = link_to "Refresh webhook", add_repository_path(repo), class: "btn btn-xs btn-default"
                       = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-danger"
 
       / /.tab-pane

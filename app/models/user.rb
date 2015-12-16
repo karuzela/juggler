@@ -8,6 +8,6 @@ class User < ActiveRecord::Base
   end
 
   def connected_with_github?
-    github_access_token.present?
+    github_access_token.present? and github_id.present?
   end
 end

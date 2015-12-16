@@ -13,7 +13,8 @@ class ConnectWithGithubService
     }
     response = RestClient.post 'https://github.com/login/oauth/access_token', gh_params, accept: :json
     token = JSON.parse(response.body)['access_token']
-    @user.update_attribute :github_access_token, token
+    client = Octokit::Client.new(access_token: token)
+    @user.update github_access_token: token, github_id: client.user.id
     return token
   rescue => e
     p e
