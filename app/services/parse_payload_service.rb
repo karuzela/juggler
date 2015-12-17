@@ -7,7 +7,7 @@ class ParsePayloadService
   def call
     if @payload['pull_request'].present?
       ProcessPullRequestFromPayloadService.new(@payload).call
-    elsif @payload['issue'].present?
+    elsif @payload['comment'].present?
       ProcessIssueCommentFromPayloadService.new(@payload).call
     end
   end

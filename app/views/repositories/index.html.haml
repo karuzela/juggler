@@ -17,6 +17,7 @@
       #tab_1.tab-pane.active
         / /.box-header
         .box-body
+          = link_to 'Refresh all webhooks', refresh_webhooks_repositories_path, class: 'btn btn-xs btn-default', method: :post
           .table-responsive
             %table.table.no-margin
               %thead
@@ -36,7 +37,6 @@
                       = repo.authorized_reviewers.count
                     %td
                       = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
-                      = link_to "Refresh webhook", add_repository_path(repo), class: "btn btn-xs btn-default"
                       = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-danger"
 
       / /.tab-pane
