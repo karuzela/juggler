@@ -28,10 +28,9 @@
                   = "Assigned: "
                   = pull_request.reviewer.name
                   %br
-                - else
+                - elsif pull_request.can_be_taken?
                   .pull-right
                     = link_to 'Take', take_pull_request_path(pull_request), method: :patch, class: 'btn btn-primary'
                 .help-block
                   %i.fa.fa-clock-o
                   = distance_of_time_in_words(pull_request.opened_at, Time.now)
-

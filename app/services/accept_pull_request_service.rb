@@ -6,7 +6,7 @@ class AcceptPullRequestService
   end
 
   def call
-    return if @pull_request.state == PullRequestState::ACCEPTED
+    return if @pull_request.accepted? or not @pull_request.can_be_reviewed?
 
     @pull_request.state = PullRequestState::ACCEPTED
     @pull_request.save
