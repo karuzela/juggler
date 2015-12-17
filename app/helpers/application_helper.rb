@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def link_to_github_connect
     gh_params = {
       client_id: ENV['GITHUB_APP_CLIENT_ID'],
@@ -7,7 +6,7 @@ module ApplicationHelper
       scope: 'repo'
     }
     url = 'https://github.com/login/oauth/authorize?' + gh_params.to_query
-  
+
     if current_user.connected_with_github?
       link_to '#' do
         '<i class="fa fa-github"></i> Connected'.html_safe
@@ -18,5 +17,4 @@ module ApplicationHelper
       end
     end
   end
-
 end
