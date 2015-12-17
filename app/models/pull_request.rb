@@ -24,10 +24,10 @@ class PullRequest < ActiveRecord::Base
   end
 
   def can_be_taken?
-    pending? and reviewer.blank?
+    pending? && reviewer.blank?
   end
 
   def can_be_reviewed?
-    pending? or accepted? or rejected?
+    pending? || accepted? || rejected?
   end
 end

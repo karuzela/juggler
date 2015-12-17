@@ -16,7 +16,7 @@ class ProcessIssueCommentFromPayloadService
   def analyze_comment(comment)
     comment = comment.downcase
     if comment.include? GH_ACCEPT_STRING
-      accept_pr  
+      accept_pr
     elsif comment.include? GH_REJECT_STRING
       reject_pr
     elsif comment.include? GH_CLAIM_STRING
@@ -38,7 +38,7 @@ class ProcessIssueCommentFromPayloadService
 
   def claim_pr
     user = User.find_by_github_id(@payload['sender']['id'])
-    if @pull_request.reviewer.blank? and user.present?
+    if @pull_request.reviewer.blank? && user.present?
       @pull_request.update(reviewer: user)
     end
   end

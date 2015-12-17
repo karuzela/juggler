@@ -4,7 +4,7 @@ class AcceptPullRequestService
   end
 
   def call
-    return if @pull_request.accepted? or not @pull_request.can_be_reviewed?
+    return if @pull_request.accepted? || !@pull_request.can_be_reviewed?
 
     @pull_request.update_attributes(state: PullRequestState::ACCEPTED)
   end
