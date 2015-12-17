@@ -6,13 +6,9 @@ class ProcessPullRequestFromPayloadService
   def call
     @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
     if pr_opened?
-      if @pull_request.nil?
-        @pull_request = PullRequest.create(pr_params(@payload))
-      else
-        @pull_request.update_attribute :state, 'pending'
-      end
-      send_slack_info_message
-      send_email_to_reviewer
+      process_opened_pr
+    elsif pr_closed?
+      process_closed_pr
     end
   end
 
@@ -20,6 +16,26 @@ class ProcessPullRequestFromPayloadService
 
   def pr_opened?
     ['opened', 'reopened', 'synchronize'].include? @payload['action']
+  end
+
+  def pr_closed?
+    @payload['action'] == 'closed'
+  end
+
+  def process_opened_pr
+    if @pull_request.nil?
+      @pull_request = PullRequest.create(pr_params(@payload))
+    else
+      @pull_request.update_attribute :state, 'pending'
+    end
+    send_slack_info_message
+    send_email_to_reviewer
+  end
+
+  def process_closed_pr
+    return if @pull_request.nil?
+    new_state = @payload['pull_request']['merged'] ? 'merged' : 'closed'
+    @pull_request.update_attribute :state, new_state
   end
 
   def pr_params(payload)
