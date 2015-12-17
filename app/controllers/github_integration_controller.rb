@@ -5,18 +5,18 @@ class GithubIntegrationController < AuthenticatedController
   end
 
   def synchronize_webhooks
-    @synchronized_repositories = Repository.where(synchronized: true)
-    bugs = []
-    @synchronized_repositories.each do |repo|
+    errors = []
+    Repository.where(synchronized: true).each do |repo|
       result = SynchronizeGithubRepositoryService.new(repo, ENV['GITHUB_ACCESS_TOKEN'], webhook_url).call
-      unless result
-        bugs.push repo.full_name
-      end
+      errors.push(repo.full_name) unless result
     end
-    flash[:notice] = 'Webhooks were refreshed.'
-    if bugs.present?
-      flash[:notice] += "However, those repositories webhooks can not be refreshed: #{bugs.to_sentence}. Please do it manually."
+
+    if errors.empty?
+      flash[:notice] = 'Webhooks were refreshed.'
+    else
+      flash[:notice] += "Those repositories were not refreshed: #{bugs.to_sentence}. Please do it manually."
     end
+
     redirect_to repositories_path
   end
 end
