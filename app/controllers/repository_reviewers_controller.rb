@@ -1,4 +1,4 @@
-class RepositoryReviewersController < ApplicationController
+class RepositoryReviewersController < AuthenticatedController
   before_action :load_repository, only: [:update]
 
   def update

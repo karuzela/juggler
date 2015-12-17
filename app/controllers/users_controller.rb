@@ -1,5 +1,4 @@
-class UsersController < ApplicationController
-  before_action :authenticate_user!
+class UsersController < AuthenticatedController
   before_action :verify_access!, only: [:index, :new, :create]
 
   def index

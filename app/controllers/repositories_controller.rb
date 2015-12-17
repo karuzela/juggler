@@ -1,4 +1,5 @@
-class RepositoriesController < ApplicationController
+class RepositoriesController < AuthenticatedController
+  skip_before_filter :authenticate_user!, only: [:github_callback]
   before_action :load_repository, only: [:add, :remove, :show, :authorized_reviewers, :destroy]
   protect_from_forgery except: :github_callback
 
