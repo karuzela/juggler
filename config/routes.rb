@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   post "/github/synchronize_repositories" => "github_integration#synchronize_repositories", as: :synchronize_repositories
   post "/github/synchronize_webhooks" => "github_integration#synchronize_webhooks", as: :synchronize_webhooks
+  post "/repositories/github_callback" => "webhooks#callback", as: :webhook
 
   resources :repositories, except: [:new, :create] do
     member do
@@ -9,9 +10,6 @@ Rails.application.routes.draw do
       resources :repository_reviewers, only: [] do
         patch :update, on: :collection
       end
-    end
-    collection do
-      post :github_callback
     end
   end
 

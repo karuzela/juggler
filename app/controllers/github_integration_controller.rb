@@ -8,7 +8,7 @@ class GithubIntegrationController < AuthenticatedController
     @synchronized_repositories = Repository.where(synchronized: true)
     bugs = []
     @synchronized_repositories.each do |repo|
-      result = SynchronizeGithubRepositoryService.new(repo, ENV['GITHUB_ACCESS_TOKEN'], github_callback_repositories_url).call
+      result = SynchronizeGithubRepositoryService.new(repo, ENV['GITHUB_ACCESS_TOKEN'], webhook_url).call
       unless result
         bugs.push repo.full_name
       end
