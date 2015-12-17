@@ -10,10 +10,5 @@ class AcceptPullRequestService
 
     @pull_request.state = PullRequestState::ACCEPTED
     @pull_request.save
-    send_comment_to_github if @pull_request.issue_number.present?
-  end
-
-  def send_comment_to_github
-    @client.add_comment(@pull_request.repository.full_name, @pull_request.issue_number, 'Accepted: ' + @params[:comment])
   end
 end
