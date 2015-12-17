@@ -1,5 +1,5 @@
 class RepositoriesController < AuthenticatedController
-  before_action :load_repository, only: [:add, :remove, :show, :authorized_reviewers, :destroy]
+  before_action :load_repository, only: [:add, :remove, :show, :update, :destroy]
 
   def index
     @synchronized_repositories = Repository.where(synchronized: true).order(full_name: :asc)
@@ -10,7 +10,7 @@ class RepositoriesController < AuthenticatedController
     @users = User.order(:name)
   end
 
-  def authorized_reviewers
+  def update
     @repository.update(authorized_reviewer_ids: params[:reviewer_ids])
     redirect_to @repository, notice: 'Updated authorized reviewers'
   end
