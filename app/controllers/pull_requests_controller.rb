@@ -19,10 +19,10 @@ class PullRequestsController < AuthenticatedController
     authorize!(:resolve, @pull_request)
 
     if params[:commit] == 'Accept'
-      AcceptPullRequestService.new(@pull_request, resolve_params, current_user).call
+      AcceptPullRequestService.new(@pull_request).call
       redirect_to root_path, notice: 'Pull request accepted'
     elsif params[:commit] == 'Reject'
-      RejectPullRequestService.new(@pull_request, resolve_params, current_user).call
+      RejectPullRequestService.new(@pull_request).call
       redirect_to root_path, notice: 'Pull request rejected'
     else
       redirect_to root_path, alert: 'Invalid action'
@@ -33,9 +33,5 @@ class PullRequestsController < AuthenticatedController
 
   def load_pull_request
     @pull_request = PullRequest.find(params[:id])
-  end
-
-  def resolve_params
-    params[:pull_request].permit(:comment)
   end
 end

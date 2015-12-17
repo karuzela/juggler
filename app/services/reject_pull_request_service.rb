@@ -1,14 +1,11 @@
 class RejectPullRequestService
-  def initialize(pull_request, params, user)
+  def initialize(pull_request)
     @pull_request = pull_request
-    @params = params
-    @client = Octokit::Client.new(access_token: user.github_access_token, auto_paginate: true)
   end
 
   def call
     return if @pull_request.rejected? or not @pull_request.can_be_reviewed?
 
-    @pull_request.state = PullRequestState::REJECTED
-    @pull_request.save
+    @pull_request.update_attributes(state: PullRequestState::REJECTED)
   end
 end
