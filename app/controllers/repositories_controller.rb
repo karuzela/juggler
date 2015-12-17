@@ -5,7 +5,6 @@ class RepositoriesController < ApplicationController
   def index
     @synchronized_repositories = Repository.where(synchronized: true).order(full_name: :asc)
     @not_synchronized_repositories = Repository.where(synchronized: false).order(full_name: :asc)
-    @repositories = Repository.order(synchronized: :desc).order(name: :asc)
   end
 
   def refresh_webhooks
