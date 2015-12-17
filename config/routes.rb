@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :repositories, except: [:new, :create, :destroy] do
+  resources :repositories, except: [:new, :create] do
     member do
       get :add
       get :remove

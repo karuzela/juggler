@@ -37,7 +37,8 @@
                       = repo.authorized_reviewers.count
                     %td
                       = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
-                      = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-danger"
+                      = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-default"
+                      = link_to "Delete", repository_path(repo), class: "btn btn-xs btn-danger", method: :delete, data: { confirm: "Are you sure?" }
 
       / /.tab-pane
       #tab_2.tab-pane
@@ -62,4 +63,5 @@
                       = repo.authorized_reviewers.count
                     %td
                       = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
-                      = link_to 'Synchronize', add_repository_path(repo), class: "btn btn-xs btn-success"
+                      = link_to 'Synchronize', add_repository_path(repo), class: "btn btn-xs btn-default"
+                      = link_to "Delete", repository_path(repo), class: "btn btn-xs btn-danger", method: :delete, data: { confirm: "Are you sure?" }

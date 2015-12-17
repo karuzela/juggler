@@ -1,5 +1,5 @@
 class RepositoriesController < ApplicationController
-  before_action :load_repository, only: [:add, :remove, :show, :authorized_reviewers]
+  before_action :load_repository, only: [:add, :remove, :show, :authorized_reviewers, :destroy]
   protect_from_forgery except: :github_callback
 
   def index
@@ -61,6 +61,11 @@ class RepositoriesController < ApplicationController
     end
     ParsePayloadService.new(payload).call
     head :ok, content_type: "text/html"
+  end
+
+  def destroy
+    @repository.destroy
+    redirect_to repositories_path, notice: "Repository removed"
   end
 
   private
