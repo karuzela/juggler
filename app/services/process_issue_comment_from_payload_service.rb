@@ -1,5 +1,4 @@
 class ProcessIssueCommentFromPayloadService
-
   GH_ACCEPT_STRING = 'juggler:accept'
   GH_REJECT_STRING = 'juggler:reject'
   GH_CLAIM_STRING = 'juggler:claim'
@@ -43,5 +42,4 @@ class ProcessIssueCommentFromPayloadService
       @pull_request.update(reviewer: user)
     end
   end
-
 end

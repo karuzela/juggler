@@ -1,5 +1,4 @@
 class ParsePayloadService
-
   def initialize(payload)
     @payload = payload
   end
@@ -11,5 +10,4 @@ class ParsePayloadService
       ProcessIssueCommentFromPayloadService.new(@payload).call
     end
   end
-
 end

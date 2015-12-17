@@ -1,5 +1,4 @@
 class ConnectWithGithubService
-
   def initialize(user, code, opts={})
     @user = user
     @code = code
@@ -20,5 +19,4 @@ class ConnectWithGithubService
     p e
     return nil
   end
-
 end

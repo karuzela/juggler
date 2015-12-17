@@ -1,5 +1,4 @@
 class ProcessPullRequestFromPayloadService
-
   def initialize(payload, opts={})
     @payload = payload
   end
