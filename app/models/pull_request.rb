@@ -14,4 +14,20 @@ class PullRequest < ActiveRecord::Base
   def rejected?
     state == PullRequestState::REJECTED
   end
+
+  def merged?
+    state == PullRequestState::MERGED
+  end
+
+  def closed?
+    state = PullRequestState::CLOSED
+  end
+
+  def can_be_taken?
+    pending? and reviewer.blank?
+  end
+
+  def can_be_reviewed?
+    pending? or accepted? or rejected?
+  end
 end

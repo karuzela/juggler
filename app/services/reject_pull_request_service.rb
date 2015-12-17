@@ -6,7 +6,7 @@ class RejectPullRequestService
   end
 
   def call
-    return if @pull_request.state == PullRequestState::REJECTED
+    return if @pull_request.rejected? or not @pull_request.can_be_reviewed?
 
     @pull_request.state = PullRequestState::REJECTED
     @pull_request.save

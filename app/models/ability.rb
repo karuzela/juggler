@@ -11,7 +11,7 @@ class Ability
     end
 
     can :take, PullRequest do |pull_request|
-      pull_request.reviewer.nil?
+      pull_request.can_be_taken?
     end
   end
 end
