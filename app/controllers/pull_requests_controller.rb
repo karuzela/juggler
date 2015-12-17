@@ -1,5 +1,5 @@
 class PullRequestsController < AuthenticatedController
-  before_action :load_pull_request, only: [:show, :take, :resolve]
+  before_action :load_pull_request
 
   def show
   end
