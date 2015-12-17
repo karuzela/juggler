@@ -1,21 +1,18 @@
-class CreatePullRequestFromPayloadService
-
+class ProcessPullRequestFromPayloadService
   def initialize(payload, opts={})
     @payload = payload
   end
 
   def call
-    if @payload['pull_request'].present?
-      @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
-      if pr_opened?
-        if @pull_request.nil?
-          @pull_request = PullRequest.create(pr_params(@payload))
-        else
-          @pull_request.update_attribute :state, 'pending'
-        end
-        send_slack_info_message
-        send_email_to_reviewer
+    @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
+    if pr_opened?
+      if @pull_request.nil?
+        @pull_request = PullRequest.create(pr_params(@payload))
+      else
+        @pull_request.update_attribute :state, 'pending'
       end
+      send_slack_info_message
+      send_email_to_reviewer
     end
   end
 

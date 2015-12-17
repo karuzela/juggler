@@ -17,6 +17,7 @@
       #tab_1.tab-pane.active
         / /.box-header
         .box-body
+          = link_to 'Refresh all webhooks', refresh_webhooks_repositories_path, class: 'btn btn-xs btn-default', method: :post
           .table-responsive
             %table.table.no-margin
               %thead

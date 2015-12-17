@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     collection do
       get :refresh
       post :github_callback
+      post :refresh_webhooks
     end
   end
 
