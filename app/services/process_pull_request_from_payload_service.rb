@@ -28,6 +28,9 @@ class ProcessPullRequestFromPayloadService
     else
       @pull_request.update_attribute :state, 'pending'
     end
+    p 'PR: DEBUG'
+    p @pull_request
+    SendStatusToGithubPullRequest.new(@pull_request, @pull_request.reviewer ? 'pending' : 'unassigned').call
     send_slack_info_message
     send_email_to_reviewer
   end

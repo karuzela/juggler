@@ -8,6 +8,7 @@ class PullRequestsController < AuthenticatedController
     authorize!(:take, @pull_request)
 
     if @pull_request.update(reviewer: current_user)
+      SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::PENDING).call
       ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
       redirect_to :back
     else
