@@ -14,7 +14,7 @@ class GithubIntegrationController < AuthenticatedController
     if errors.empty?
       flash[:notice] = 'Webhooks were refreshed.'
     else
-      flash[:notice] += "Those repositories were not refreshed: #{bugs.to_sentence}. Please do it manually."
+      flash[:notice] = "Those repositories were not refreshed: #{errors.to_sentence}. Please do it manually."
     end
 
     redirect_to repositories_path
