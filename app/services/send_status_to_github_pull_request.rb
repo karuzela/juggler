@@ -8,10 +8,8 @@ class SendStatusToGithubPullRequest
   end
 
   def call
-    commits_sha = @client.pull_request_commits(@pull_request.repository.full_name, @pull_request.issue_number).collect { |x| x.sha }
-    commits_sha.each do |sha|
-      @client.create_status(@pull_request.repository.full_name, sha, @state, description: @description, context: 'juggler')
-    end
+    sha = @client.pull_request(@pull_request.repository.full_name, @pull_request.issue_number).head.sha
+    @client.create_status(@pull_request.repository.full_name, sha, @state, description: @description, context: 'juggler')
   end
 
   private
