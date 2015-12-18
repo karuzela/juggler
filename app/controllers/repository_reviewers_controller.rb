@@ -1,5 +1,5 @@
-class RepositoryReviewersController < ApplicationController
-  before_action :load_repository, only: [:update]
+class RepositoryReviewersController < AuthenticatedController
+  before_action :load_repository
 
   def update
     @repository.update(authorized_reviewer_ids: params[:reviewer_ids])

@@ -1,6 +1,5 @@
-class PullRequestsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :load_pull_request, only: [:show, :take, :resolve]
+class PullRequestsController < AuthenticatedController
+  before_action :load_pull_request
 
   def show
   end
@@ -20,10 +19,10 @@ class PullRequestsController < ApplicationController
     authorize!(:resolve, @pull_request)
 
     if params[:commit] == 'Accept'
-      AcceptPullRequestService.new(@pull_request, resolve_params, current_user).call
+      AcceptPullRequestService.new(@pull_request).call
       redirect_to root_path, notice: 'Pull request accepted'
     elsif params[:commit] == 'Reject'
-      RejectPullRequestService.new(@pull_request, resolve_params, current_user).call
+      RejectPullRequestService.new(@pull_request).call
       redirect_to root_path, notice: 'Pull request rejected'
     else
       redirect_to root_path, alert: 'Invalid action'
@@ -34,9 +33,5 @@ class PullRequestsController < ApplicationController
 
   def load_pull_request
     @pull_request = PullRequest.find(params[:id])
-  end
-
-  def resolve_params
-    params[:pull_request].permit(:comment)
   end
 end

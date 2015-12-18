@@ -25,10 +25,6 @@
             - if current_user.connected_with_github?
               .box-body
                 = @pull_request.body
-                .form-group
-                  %label{:for => "exampleInputEmail1"}
-                    Comment:
-                  = text_area_tag 'pull_request[comment]', '', rows: 3, class: "form-control"
               .box-footer
                 = submit_tag 'Accept', class: "button btn btn-success" unless @pull_request.accepted?
                 = submit_tag 'Reject', class: "button btn btn-danger" unless @pull_request.rejected?

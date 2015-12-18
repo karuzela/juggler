@@ -2,7 +2,7 @@
   %h1
     Manage Repositories
     .pull-right
-      = link_to 'Refresh repositories list', refresh_repositories_path, class: "btn btn-primary"
+      = link_to 'Refresh repositories list', synchronize_repositories_path, class: "btn btn-primary", method: :post
 %section.content
 
   .nav-tabs-custom
@@ -17,7 +17,7 @@
       #tab_1.tab-pane.active
         / /.box-header
         .box-body
-          = link_to 'Refresh all webhooks', refresh_webhooks_repositories_path, class: 'btn btn-xs btn-default', method: :post
+          = link_to 'Refresh all webhooks', synchronize_webhooks_path, class: 'btn btn-xs btn-default', method: :post
           .table-responsive
             %table.table.no-margin
               %thead
@@ -37,7 +37,8 @@
                       = repo.authorized_reviewers.count
                     %td
                       = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
-                      = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-danger"
+                      = link_to 'Unsynchronize', remove_repository_path(repo), class: "btn btn-xs btn-default"
+                      = link_to "Delete", repository_path(repo), class: "btn btn-xs btn-danger", method: :delete, data: { confirm: "Are you sure?" }
 
       / /.tab-pane
       #tab_2.tab-pane
@@ -62,4 +63,5 @@
                       = repo.authorized_reviewers.count
                     %td
                       = link_to "Edit", repository_path(repo), class: "btn btn-xs btn-default"
-                      = link_to 'Synchronize', add_repository_path(repo), class: "btn btn-xs btn-success"
+                      = link_to 'Synchronize', add_repository_path(repo), class: "btn btn-xs btn-default"
+                      = link_to "Delete", repository_path(repo), class: "btn btn-xs btn-danger", method: :delete, data: { confirm: "Are you sure?" }
