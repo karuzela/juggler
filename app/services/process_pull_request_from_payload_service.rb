@@ -86,7 +86,7 @@ class ProcessPullRequestFromPayloadService
         attachments: attachments,
         channel: @pull_request.reviewer.slack_channel
       )
-      ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
+      ReminderWorker.perform_at(WorkingHoursChecker.new(delay: ENV["REMAIND_AFTER_HOURS"]).get_date, @pull_request.id)
     else
       slack.send_message(
         "Greetings *Visuality Team*. New pull request is ready for code review. [Click here to claim it](#{url})",
