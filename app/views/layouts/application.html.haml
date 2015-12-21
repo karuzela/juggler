@@ -88,7 +88,12 @@
                   %i.icon.fa.fa-ban
                   Alert!
                 = flash[:alert]
-            = yield
+            - if current_user.connected_with_github?
+              = yield
+            - else
+              .alert.alert-danger{style: 'margin-top:10px'}
+                You have to connect with yout Github account.
+                = link_to_github_connect class: 'btn btn-default alert-link'
       - else
         .content-wrapper{style: "background-color: #2f89c6; background-image: url(#{image_url('background.png')}); background-repeat-y: no-repeat"}
           .container
