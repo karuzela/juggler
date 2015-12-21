@@ -26,8 +26,10 @@ class ProcessPullRequestFromPayloadService
     if @pull_request.nil?
       @pull_request = PullRequest.create(pr_params(@payload))
     else
-      @pull_request.update_attribute :state, 'pending'
+      @pull_request.update_attribute :state, PullRequestState::PENDING
     end
+    status = @pull_request.reviewer ? PullRequestState::PENDING : 'unassigned'
+    SendStatusToGithubPullRequest.new(@pull_request, status).call
     send_slack_info_message
     send_email_to_reviewer
   end
@@ -41,7 +43,7 @@ class ProcessPullRequestFromPayloadService
   def pr_params(payload)
     pr_hash = {}
 
-    pr_hash[:state] = 'pending'
+    pr_hash[:state] = PullRequestState::PENDING
     pr_hash[:github_id] = payload['pull_request']['id']
     pr_hash[:opened_at] = payload['pull_request']['created_at']
     pr_hash[:title] = payload['pull_request']['title']
