@@ -3,7 +3,7 @@ class WebhooksController < ApplicationController
 
   def callback
     if request.content_type == 'application/json'
-      payload = params
+      payload = params[:webhook] || params
     else
       payload = JSON.parse params[:payload].to_s
     end
