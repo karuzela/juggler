@@ -52,7 +52,9 @@
                     / Menu Toggle Button
                     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                       / hidden-xs hides the username on small devices so only the image appears.
-                      %span.hidden-xs= current_user.name
+                      %span.hidden-xs
+                        = github_avatar(current_user)
+                        = current_user.name
                     %ul.dropdown-menu
                       / The user image in the menu
                       %li.user-header

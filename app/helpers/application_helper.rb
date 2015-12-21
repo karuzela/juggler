@@ -17,4 +17,12 @@ module ApplicationHelper
       end
     end
   end
+
+  def github_avatar(user, img_size=20)
+    if user.github_id.present?
+      image_tag('https://avatars.githubusercontent.com/u/' + user.github_id.to_s, width: img_size, class: 'github-avatar')
+    else
+      ''
+    end
+  end
 end
