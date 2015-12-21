@@ -12,7 +12,9 @@
       %th Admin
     - @users.each do |user|
       %tr
-        %td= user.name
+        %td
+          = github_avatar(user)
+          = user.name
         %td= user.email
         %td= user.slack_channel
         %td= user.connected_with_github? ? "yes" : ""
