@@ -25,14 +25,16 @@ class ProcessIssueCommentFromPayloadService
   end
 
   def accept_pr
-    if @pull_request.pending?
+    if @pull_request.pending? || @pull_request.rejected?
       @pull_request.update_attribute :state, PullRequestState::ACCEPTED
+      SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::ACCEPTED).call
     end
   end
 
   def reject_pr
-    if @pull_request.pending?
+    if @pull_request.pending? || @pull_request.accepted?
       @pull_request.update_attribute :state, PullRequestState::REJECTED
+      SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::REJECTED).call
     end
   end
 
@@ -40,6 +42,7 @@ class ProcessIssueCommentFromPayloadService
     user = User.find_by_github_id(@payload['sender']['id'])
     if @pull_request.reviewer.blank? && user.present?
       @pull_request.update(reviewer: user)
+      SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::PENDING).call
     end
   end
 end

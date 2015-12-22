@@ -25,6 +25,7 @@
 
               .box-body
                 - if pull_request.reviewer.present?
+                  = github_avatar(pull_request.reviewer)
                   = "Assigned: "
                   = pull_request.reviewer.name
                   %br

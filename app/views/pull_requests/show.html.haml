@@ -18,6 +18,7 @@
                   %i.fa.fa-github
                   = "View on GitHub"
           - if @pull_request.reviewer
+            = github_avatar(@pull_request.reviewer)
             = "Assigned: "
             = @pull_request.reviewer.name
         - if current_user == @pull_request.reviewer and @pull_request.can_be_reviewed?
