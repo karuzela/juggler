@@ -12,10 +12,12 @@ class RepositoriesController < AuthenticatedController
 
   def new
     @repository = Repository.new
+    @required_scopes = Repository.subscribed_events
   end
 
   def create
     @repository = Repository.new(repo_params)
+    @required_scopes = Repository.subscribed_events
     if @repository.save
       redirect_to repositories_path, notice: 'Repository saved. Please add webhook in Github repository settings panel'
     else
