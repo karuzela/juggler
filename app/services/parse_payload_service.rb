@@ -8,6 +8,8 @@ class ParsePayloadService
       ProcessPullRequestFromPayloadService.new(@payload).call
     elsif @payload['comment'].present?
       ProcessIssueCommentFromPayloadService.new(@payload).call
+    elsif @payload['zen'].present? && @payload['repository'].present?
+      ProcessNewWebhookFromPayloadService.new(@payload).call
     end
   end
 end

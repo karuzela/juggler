@@ -10,6 +10,19 @@ class RepositoriesController < AuthenticatedController
     @users = User.order(:name)
   end
 
+  def new
+    @repository = Repository.new
+  end
+
+  def create
+    @repository = Repository.new(repo_params)
+    if @repository.save
+      redirect_to repositories_path, notice: 'Repository saved. Please add webhook in Github repository settings panel'
+    else
+      render :new
+    end
+  end
+
   def update
     @repository.update(authorized_reviewer_ids: params[:reviewer_ids])
     redirect_to @repository, notice: 'Updated authorized reviewers'
@@ -37,6 +50,10 @@ class RepositoriesController < AuthenticatedController
   end
 
   private
+
+  def repo_params
+    params.require(:repository).permit(:full_name, :github_id)
+  end
 
   def load_repository
     @repository = Repository.find(params[:id])
