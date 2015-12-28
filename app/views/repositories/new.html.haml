@@ -1,0 +1,13 @@
+.col-sm-6.col-sm-offset-3
+  %section.content-header
+    %h1 Add repository manually
+  %section.content
+    .box
+      .box-body
+        = simple_form_for @repository, defaults: { input_html: {class: 'form-control'}, wrapper_html: {class: 'form-group'} } do |r|
+          = r.input :full_name, input_html: {placeholder: 'for example: visualitypl/juggler'}
+          = r.input :github_id, label: 'Github ID'
+          = r.submit nil, class: 'btn btn-primary'
+    .well
+      Remember to add webhook manually on Github with these scopes:
+      = @required_scopes.to_sentence

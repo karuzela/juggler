@@ -2,6 +2,7 @@
   %h1
     Manage Repositories
     .pull-right
+      = link_to 'Add repository manually', new_repository_path, class: "btn btn-primary"
       = link_to 'Refresh repositories list', synchronize_repositories_path, class: "btn btn-primary", method: :post
 %section.content
 
