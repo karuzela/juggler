@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post "/github/synchronize_webhooks" => "github_integration#synchronize_webhooks", as: :synchronize_webhooks
   post "/repositories/github_callback" => "webhooks#callback", as: :webhook
 
-  resources :repositories, except: [:new, :create] do
+  resources :repositories do
     get :add, on: :member
     get :remove, on: :member
   end
