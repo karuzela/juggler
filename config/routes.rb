@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :pull_requests do
     patch :resolve, on: :member
     patch :take, on: :member
+    post "neko_claim/:token" => "pull_requests#neko_claim", as: 'neko_claim', on: :collection
   end
 
   devise_for :users
