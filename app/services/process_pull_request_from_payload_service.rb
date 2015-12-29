@@ -40,6 +40,14 @@ class ProcessPullRequestFromPayloadService
     @pull_request.update_attribute :state, new_state
   end
 
+  def set_token
+    token = SecureRandom.hex(3)
+    while PullRequest.where(token: token).present?
+      token = SecureRandom.hex(3)
+    end
+    token
+  end
+
   def pr_params(payload)
     pr_hash = {}
 
@@ -51,6 +59,7 @@ class ProcessPullRequestFromPayloadService
     pr_hash[:issue_number] = payload['pull_request']['number']
     pr_hash[:repository_id] = Repository.find_by_github_id(payload['repository']['id']).id
     pr_hash[:url] = payload['pull_request']['html_url']
+    pr_hash[:token] = set_token
 
     return pr_hash
   end
