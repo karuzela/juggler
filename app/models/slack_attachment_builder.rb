@@ -20,6 +20,11 @@ class SlackAttachmentBuilder
           title: "Number",
           value: pull_request.issue_number,
           short: true
+        },
+        {
+          title: "Claim command",
+          value: "juggler:claim " + pull_request.token,
+          short: true
         }
       ]
     }

@@ -6,13 +6,11 @@ class PullRequestsController < AuthenticatedController
 
   def take
     authorize!(:take, @pull_request)
-
-    if @pull_request.update(reviewer: current_user)
-      SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::PENDING).call
-      ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
-      redirect_to :back
+    success, msg = TakePullRequestService.new(@pull_request, current_user).call
+    if success
+      redirect_to :back, notice: msg
     else
-      redirect_to :back, alert: 'You can\'t be assigned to this pull request'
+      redirect_to :back, alert: msg
     end
   end
 

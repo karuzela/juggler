@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   post "/github/synchronize_repositories" => "github_integration#synchronize_repositories", as: :synchronize_repositories
   post "/github/synchronize_webhooks" => "github_integration#synchronize_webhooks", as: :synchronize_webhooks
   post "/repositories/github_callback" => "webhooks#callback", as: :webhook
+  
+  namespace :api do
+    post "/pull_requests/claim/:token" => "pull_requests#claim", as: :claim_pull_request
+  end
 
   resources :repositories do
     get :add, on: :member

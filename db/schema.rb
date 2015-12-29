@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222112032) do
+ActiveRecord::Schema.define(version: 20151228084216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,10 @@ ActiveRecord::Schema.define(version: 20151222112032) do
     t.integer  "issue_number"
     t.string   "url"
     t.string   "head_sha"
+    t.string   "token"
   end
+
+  add_index "pull_requests", ["token"], name: "index_pull_requests_on_token", unique: true, using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.string   "name"
