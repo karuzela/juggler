@@ -16,7 +16,6 @@ class ConnectWithGithubService
     @user.update github_access_token: token, github_id: client.user.id
     return token
   rescue => e
-    p e
     return nil
   end
 end

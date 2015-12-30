@@ -12,25 +12,25 @@ describe ConnectWithGithubService do
     stub_request(:get, 'https://api.github.com/user').to_return(status: 200)
   end
 
-  context 'should update' do
+  context 'when user logged in' do
     before(:each) do
       allow(Octokit::Client).to receive_message_chain('new.user.id') { '1' }
     end
 
-    it 'user github_access_token' do
+    it 'update user github_access_token' do
       expect { service.call }.to change(user, :github_access_token).to(access_token)
     end
 
-    it 'user github_id' do
+    it 'update user github_id' do
       expect { service.call }.to change(user, :github_id).to(1)
     end
 
-    it 'and return some value' do
+    it 'return valid token' do
       expect(service.call).to eq('e72e16c7e42f292c6912e7710c838347ae178b4a') 
     end
   end
 
-  context 'should not update' do
+  context 'when user is not logged in' do
     before(:each) do
       allow(Octokit::Client).to receive_message_chain('new.user.id').and_raise(Octokit::Unauthorized)
     end
@@ -41,6 +41,10 @@ describe ConnectWithGithubService do
 
     it 'user github_id' do
       expect { service.call }.to_not change(user, :github_id)
+    end
+
+    it 'return nil' do
+      expect(service.call).to be_nil
     end
   end
 end
