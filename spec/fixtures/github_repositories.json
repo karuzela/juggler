@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "repo1",
+    "full_name": "username/repo1",
+    "git_url": "git@github.com:username/repo1.git",
+    "html_url": "https://github.com/username/repo1",
+    "owner": {
+      "login": "username"
+    }
+  },
+  {
+    "id": 2,
+    "name": "repo2",
+    "full_name": "username/repo2",
+    "git_url": "git@github.com:username/repo2.git",
+    "html_url": "https://github.com/username/repo2",
+    "owner": {
+      "login": "username"
+    }
+  },
+  {
+    "id": 3,
+    "name": "repo3",
+    "full_name": "username/repo3",
+    "git_url": "git@github.com:username/repo3.git",
+    "html_url": "https://github.com/username/repo3",
+    "owner": {
+      "login": "username"
+    }
+  }
+]
