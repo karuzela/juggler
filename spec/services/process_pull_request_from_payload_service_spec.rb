@@ -18,6 +18,17 @@ describe ProcessPullRequestFromPayloadService do
       pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::REJECTED)
       expect { service.call }.to change { pr.reload.state }.from(PullRequestState::REJECTED).to(PullRequestState::PENDING)
     end
+
+    it 'sends slack message' do
+      pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING)
+      expect(SlackClient).to receive_message_chain('new.send_message')
+      service.call
+    end
+
+    it 'sends mail to reviewer' do
+      pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING, reviewer: create(:user))
+      expect { service.call }.to change { ActionMailer::Base.deliveries.count }.by(2)
+    end
   end
 
   context 'when closed payload received' do
