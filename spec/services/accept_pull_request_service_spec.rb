@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe AcceptPullRequestService do
   let(:pull_request) { create(:pull_request, state: PullRequestState::PENDING) }
 

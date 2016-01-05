@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ConnectWithGithubService do
   let(:user) { create(:user, github_access_token: nil, github_id: nil) }
   let(:code) { 'aaa' }

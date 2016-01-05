@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ProcessNewWebhookFromPayloadService do
   let(:payload) { JSON.parse( File.open(Rails.root.to_s + '/spec/fixtures/new_webhook_payload.json').read ) }
   let(:service) { ProcessNewWebhookFromPayloadService.new(payload) }

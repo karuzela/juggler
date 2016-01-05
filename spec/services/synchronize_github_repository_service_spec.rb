@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe SynchronizeGithubRepositoryService do
   let(:repository) { create(:repository, synchronized: false) }
   let(:service) { SynchronizeGithubRepositoryService.new(repository, 'token', Rails.application.routes.url_helpers.webhook_path) }

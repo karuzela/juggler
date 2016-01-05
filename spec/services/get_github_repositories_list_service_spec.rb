@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe GetGithubRepositoriesListService do
   let(:service) { GetGithubRepositoriesListService.new(access_token: 'abcdef') }
   let!(:repository) { create(:repository, github_id: 1) }

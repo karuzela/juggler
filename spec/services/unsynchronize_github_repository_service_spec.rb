@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe UnsynchronizeGithubRepositoryService do
   let(:repository) { create(:repository, synchronized: true) }
   let(:service) { UnsynchronizeGithubRepositoryService.new(repository, 'token', Rails.application.routes.url_helpers.webhook_path) }

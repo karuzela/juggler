@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ProcessIssueCommentFromPayloadService do
   let(:claim_message) { "Test message juggler:claim" }
   let(:accept_message) { "Test message juggler:accept" }

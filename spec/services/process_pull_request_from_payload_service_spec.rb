@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ProcessPullRequestFromPayloadService do
   let!(:repository) { create(:repository, github_id: 1) }
 

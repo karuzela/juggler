@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ParsePayloadService do
 
   it 'call pull requests processing service' do

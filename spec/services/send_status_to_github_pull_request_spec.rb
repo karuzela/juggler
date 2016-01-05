@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe SendStatusToGithubPullRequest do
   let(:user) { create(:user, email: 'sample@example.com') }
   let(:pull_request) { create(:pull_request, reviewer: user) }

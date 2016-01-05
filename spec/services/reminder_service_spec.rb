@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe ReminderService do
   context 'on pending pull request' do
     let(:pull_request) { create(:pull_request, state: PullRequestState::PENDING, reviewer: create(:user)) }

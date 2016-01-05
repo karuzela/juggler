@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe AutoAssignService do
   let(:pr) { create(:pull_request) }
   let!(:user) { create(:user) }
