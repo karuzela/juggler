@@ -4,8 +4,13 @@ class GetGithubRepositoriesListService
   end
 
   def call
-    @client.repositories(@client.user['username']).each do |r|
-      Repository.create(repository_params_from_api(r)) if Repository.find_by_github_id(r['id']).blank?
+    @client.repositories.each do |r|
+      repo = Repository.find_by_github_id(r['id'])
+      if repo.nil?
+        Repository.create(repository_params_from_api(r))
+      else
+        repo.update(repository_params_from_api(r))
+      end
     end
   end
 
