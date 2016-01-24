@@ -8,7 +8,7 @@ describe ProcessIssueCommentFromPayloadService do
   let!(:pull_request) { create(:pull_request, issue_number: 1, repository: repository) }
   let(:payload) { JSON.parse( File.open(Rails.root.to_s + '/spec/fixtures/issue_comment_payload.json').read ) }
   let(:reviewer) { create(:user, github_id: 1) }
-  let(:claim_payload) { 
+  let(:claim_payload) {
     cp = payload.dup
     cp['comment']['body'] = claim_message
     cp
@@ -38,6 +38,11 @@ describe ProcessIssueCommentFromPayloadService do
     it 'accepts rejected pull request' do
       pull_request.update_attribute :state, PullRequestState::REJECTED
       expect { @service.call }.to change { pull_request.reload.state }.from(PullRequestState::REJECTED).to(PullRequestState::ACCEPTED)
+    end
+
+    it 'sets reviewer' do
+      pull_request.update_attribute :reviewer, nil
+      expect { @service.call }.to change { pull_request.reload.reviewer }.from(nil).to(reviewer)
     end
   end
 
