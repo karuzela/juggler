@@ -45,6 +45,6 @@ class AutoAssignService
 
   def set_remainder
     return unless @reviewer
-    ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
+    ReminderWorker.perform_at(WorkingHoursChecker.new(delay: ENV["REMAIND_AFTER_HOURS"]).get_date, @pull_request.id)
   end
 end

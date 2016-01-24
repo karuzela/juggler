@@ -10,6 +10,7 @@ class ProcessPullRequestFromPayloadService
     elsif pr_closed?
       process_closed_pr
     end
+    update_pr
   end
 
   private
@@ -22,16 +23,37 @@ class ProcessPullRequestFromPayloadService
     @payload['action'] == 'closed'
   end
 
+  def payload_newer_than_pr?
+    if @pull_request.head_sha == @payload['pull_request']['head']['sha'] && !@new_record
+      false
+    else
+      true
+    end
+  end
+
+  def update_pr
+    p 'UPDATE'
+    @pull_request.update(
+      body: @payload['pull_request']['body'], 
+      head_sha: @payload['pull_request']['head']['sha'],
+      title: @payload['pull_request']['title']
+    )
+  end
+
   def process_opened_pr
     if @pull_request.nil?
       @pull_request = PullRequest.create(pr_params(@payload))
+      @new_record = true
     else
       @pull_request.update_attribute :state, PullRequestState::PENDING
+      @new_record = false
     end
     status = @pull_request.reviewer ? PullRequestState::PENDING : 'unassigned'
     SendStatusToGithubPullRequest.new(@pull_request, status).call
-    send_slack_info_message
-    send_email_to_reviewer
+    if payload_newer_than_pr?
+      send_slack_info_message
+      send_email_to_reviewer
+    end
   end
 
   def process_closed_pr
@@ -75,7 +97,7 @@ class ProcessPullRequestFromPayloadService
         attachments: attachments,
         channel: @pull_request.reviewer.slack_channel
       )
-      ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
+      ReminderWorker.perform_at(WorkingHoursChecker.new(delay: ENV["REMAIND_AFTER_HOURS"]).get_date, @pull_request.id)
     else
       slack.send_message(
         "Greetings *Visuality Team*. New pull request is ready for code review. To claim it [click here](#{url}) or type \`juggler:claim #{@pull_request.token}\` on this channel.",
