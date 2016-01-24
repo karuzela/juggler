@@ -25,8 +25,12 @@ class ProcessIssueCommentFromPayloadService
   end
 
   def accept_pr
+    user = User.find_by_github_id(@payload['sender']['id'])
     if @pull_request.pending? || @pull_request.rejected?
-      @pull_request.update_attribute :state, PullRequestState::ACCEPTED
+      @pull_request.update(
+        state: PullRequestState::ACCEPTED,
+        reviewer: user
+      )
       SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::ACCEPTED).call
     end
   end

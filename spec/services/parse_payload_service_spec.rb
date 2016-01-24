@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe ParsePayloadService do
-
   it 'call pull requests processing service' do
     allow(ProcessPullRequestFromPayloadService).to receive(:new).and_return(service = double("service", call: true))
     expect(service).to receive(:call)
