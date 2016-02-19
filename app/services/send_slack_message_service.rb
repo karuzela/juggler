@@ -7,14 +7,10 @@ class SendSlackMessageService
   end
 
   def call
-    attachments = [SlackAttachmentBuilder.build(@pull_request)]
-    message = config[@message_type][:message]
-    channel = config[@message_type][:channel]
-
     @slack.send_message(
-      message,
-      attachments: attachments,
-      channel: channel
+      config[@message_type][:message],
+      attachments: [SlackAttachmentBuilder.build(@pull_request)],
+      channel: config[@message_type][:channel]
     )
   end
 
