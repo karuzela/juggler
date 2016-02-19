@@ -4,9 +4,6 @@ class SendSlackMessageService
     @pull_request = pull_request
     @message_type = message_type
     @url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
-    p 'DEBUG'
-    p pull_request
-    p message_type
   end
 
   def call
