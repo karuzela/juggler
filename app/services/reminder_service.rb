@@ -12,15 +12,7 @@ class ReminderService
   private
 
   def send_slack_message
-    slack = SlackClient.new()
-    url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
-    attachments = [SlackAttachmentBuilder.build(@pull_request)]
-
-    slack.send_message(
-      "Hey! Remember to review this pull request. Do not test my patience. [Details are here](#{url})",
-      attachments: attachments,
-      channel: @pull_request.reviewer.slack_channel
-    )
+    SendSlackMessageService.new(@pull_request, :reminder).call
   end
 
   def send_email_messsage
