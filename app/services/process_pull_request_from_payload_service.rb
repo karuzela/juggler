@@ -1,15 +1,16 @@
 class ProcessPullRequestFromPayloadService
   def initialize(payload, opts={})
     @payload = payload
+    @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
   end
 
   def call
-    @pull_request = PullRequest.find_by_github_id(@payload['pull_request']['id'])
     if pr_opened?
       process_opened_pr
     elsif pr_closed?
       process_closed_pr
     end
+
     update_pr
   end
 
@@ -32,9 +33,10 @@ class ProcessPullRequestFromPayloadService
   end
 
   def update_pr
-    p 'UPDATE'
+    return nil unless @pull_request
+
     @pull_request.update(
-      body: @payload['pull_request']['body'], 
+      body: @payload['pull_request']['body'],
       head_sha: @payload['pull_request']['head']['sha'],
       title: @payload['pull_request']['title']
     )
