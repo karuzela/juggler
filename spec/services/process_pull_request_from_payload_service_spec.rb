@@ -12,7 +12,7 @@ describe ProcessPullRequestFromPayloadService do
     let(:opened_payload) { JSON.parse( File.open(Rails.root.to_s + '/spec/fixtures/pull_request_opened_payload.json').read ) }
     let(:service) { ProcessPullRequestFromPayloadService.new(opened_payload) }
 
-    it 'creates new pull request' do
+    it 'creates new pull request if not found' do
       expect { service.call }.to change { PullRequest.all.count }.by(1)
     end
 
@@ -22,13 +22,13 @@ describe ProcessPullRequestFromPayloadService do
     end
 
     it 'sends slack message' do
-      pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING)
+      create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING)
       expect(SlackClient).to receive_message_chain('new.send_message')
       service.call
     end
 
     it 'sends mail to reviewer' do
-      pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING, reviewer: create(:user))
+      create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING, reviewer: create(:user))
       expect { service.call }.to change { ActionMailer::Base.deliveries.count }.by(2)
     end
   end

@@ -7,5 +7,6 @@ FactoryGirl.define do
     body "Pull request body"
 
     opened_at { Time.now }
+    sequence(:token) { |number| number }
   end
 end
