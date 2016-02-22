@@ -8,33 +8,34 @@ class SendSlackMessageService
 
   def call
     @slack.send_message(
-      config[@message_type][:message],
+      message(@message_type),
       attachments: [SlackAttachmentBuilder.build(@pull_request)],
-      channel: config[@message_type][:channel]
+      channel: channel(@message_type)
     )
   end
 
   private
 
-  def config
-    {
-      auto_assign: {
-        message: "Hey! You were auto-assigned to review this pull request. [Click here for details](#{@url})",
-        channel: @pull_request.reviewer.try(:slack_channel)
-      },
-      reminder: {
-        message: "Hey! Remember to review this pull request. Do not test my patience. [Details are here](#{@url})",
-        channel: @pull_request.reviewer.try(:slack_channel)
-      },
-      pr_updated: {
-        message: "Hey! This pull request was updated. [Click here for details](#{@url})",
-        channel: @pull_request.reviewer.try(:slack_channel)
-      },
-      new_pr: {
-        message: "Greetings *Visuality Team*. New pull request is ready for code review. To claim it [click here](#{@url}) or type \`juggler:claim #{@pull_request.token}\` on this channel.",
-        channel: default_channel
-      }
-    }
+  def message(message_type)
+    case message_type
+    when :auto_assign
+      "Hey! You were auto-assigned to review this pull request. [Click here for details](#{@url})"
+    when :reminder
+      "Hey! Remember to review this pull request. Do not test my patience. [Details are here](#{@url})"
+    when :pr_updated
+      "Hey! This pull request was updated. [Click here for details](#{@url})"
+    when :new_pr
+      "Greetings *Visuality Team*. New pull request is ready for code review. To claim it [click here](#{@url}) or type \`juggler:claim #{@pull_request.token}\` on this channel."
+    end
+  end
+
+  def channel(message_type)
+    case message_type
+    when :new_pr
+      default_channel
+    else
+      @pull_request.reviewer.try(:slack_channel)
+    end
   end
 
   def default_channel
