@@ -21,9 +21,4 @@ describe AutoAssignService do
     service = AutoAssignService.new(pr)
     expect{ service.call }.to change(pr, :reviewer).from(nil).to(user)
   end
-
-  it 'send email' do
-    service = AutoAssignService.new(pr)
-    expect { service.call }.to change { ActionMailer::Base.deliveries.count }.by(2) #also from worker
-  end
 end

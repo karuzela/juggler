@@ -7,7 +7,6 @@ class AutoAssignService
     return false if @pull_request.reviewer || !@pull_request.pending?
     update_pull_request
     send_slack_message
-    send_email_messsage
     set_remainder
 
     true
@@ -36,11 +35,6 @@ class AutoAssignService
       channel: @pull_request.reviewer.slack_channel,
       attachments: attachments
     )
-  end
-
-  def send_email_messsage
-    return unless @reviewer
-    NotificationMailer.auto_assign(@pull_request).deliver_now
   end
 
   def set_remainder
