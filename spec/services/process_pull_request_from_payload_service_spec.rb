@@ -26,20 +26,11 @@ describe ProcessPullRequestFromPayloadService do
       expect(SlackClient).to receive_message_chain('new.send_message')
       service.call
     end
-
-    it 'sends mail to reviewer' do
-      pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING, reviewer: create(:user))
-      expect { service.call }.to change { ActionMailer::Base.deliveries.count }.by(2)
-    end
   end
 
   context 'when closed payload received' do
     let(:closed_payload) { JSON.parse( File.open(Rails.root.to_s + '/spec/fixtures/pull_request_closed_payload.json').read ) }
     let(:service) { ProcessPullRequestFromPayloadService.new(closed_payload) }
-
-    it 'returns nil if pull request is not found' do
-      expect(service.call).to be_nil
-    end
 
     it 'updates status to closed if merge flag is false' do
       pr = create(:pull_request, github_id: 1, id: 1, state: PullRequestState::PENDING)

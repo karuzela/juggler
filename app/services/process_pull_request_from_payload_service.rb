@@ -32,9 +32,8 @@ class ProcessPullRequestFromPayloadService
   end
 
   def update_pr
-    p 'UPDATE'
     @pull_request.update(
-      body: @payload['pull_request']['body'], 
+      body: @payload['pull_request']['body'],
       head_sha: @payload['pull_request']['head']['sha'],
       title: @payload['pull_request']['title']
     )

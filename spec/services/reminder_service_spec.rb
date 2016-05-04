@@ -11,10 +11,6 @@ describe ReminderService do
       expect(SlackClient).to receive_message_chain('new.send_message')
       service.call
     end
-
-    it 'sends email' do
-      expect { service.call }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
   end
 
   context 'on pull request with state other than pending' do
