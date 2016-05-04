@@ -84,7 +84,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   ActionMailer::Base.smtp_settings = {
     address: ENV["MAIL_SMTP_SETTINGS_ADDRESS"],
-    port: ENV["MAIL_SMTP_SETTINGS_PORT"],
+    port: ENV["MAIL_SMTP_SETTINGS_PORT"].to_i,
     enable_starttls_auto: ENV["MAIL_SMTP_SETTINGS_ENABLE_STARTTLS_AUTO"] == 'true',
     domain: ENV['MAIL_SMTP_SETTINGS_DOMAIN'],
     authentication: ENV['MAIL_SMTP_SETTINGS_AUTHENTICATION'],
