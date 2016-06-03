@@ -29,8 +29,12 @@ group :development do
   gem "spring"
 end
 
-group :test do
+group :development, :test do
+  gem "byebug"
   gem "factory_girl_rails"
+end
+
+group :test do
   gem "rspec-rails"
   gem "simplecov"
   gem "webmock"

@@ -99,7 +99,7 @@ class ProcessPullRequestFromPayloadService
         attachments: attachments,
         channel: @pull_request.reviewer.slack_channel
       )
-      ReminderWorker.perform_at(WorkingHoursChecker.new(delay: ENV["REMAIND_AFTER_HOURS"]).get_date, @pull_request.id)
+      ReminderWorker.perform_at(WorkingHoursChecker.new(delay: @pull_request.repository.remind_time).get_date, @pull_request.id)
     else
       slack.send_message(
         "Greetings *Visuality Team*. New pull request is ready for code review. To claim it [click here](#{url}) or type \`juggler:claim #{@pull_request.token}\` on this channel.",

@@ -8,7 +8,7 @@ class AutoAssignService
     update_pull_request
     send_slack_message
     send_email_messsage
-    set_remainder
+    set_reminder
 
     true
   end
@@ -43,8 +43,8 @@ class AutoAssignService
     NotificationMailer.auto_assign(@pull_request).deliver_now
   end
 
-  def set_remainder
+  def set_reminder
     return unless @reviewer
-    ReminderWorker.perform_at(WorkingHoursChecker.new(delay: ENV["REMAIND_AFTER_HOURS"]).get_date, @pull_request.id)
+    ReminderWorker.perform_at(WorkingHoursChecker.new(delay: @pull_request.repository.remind_time).get_date, @pull_request.id)
   end
 end

@@ -10,7 +10,7 @@ class TakePullRequestService
     end
     if @pull_request.update(reviewer: @user)
       SendStatusToGithubPullRequest.new(@pull_request, PullRequestState::PENDING).call
-      ReminderWorker.perform_at(ENV["REMAIND_AFTER_HOURS"].to_i.hours.from_now, @pull_request.id)
+      ReminderWorker.perform_at(@pull_request.repository.remind_time.hours.from_now, @pull_request.id)
       success = true
       message = "You were assigned to pull request: #{@pull_request.title}"
     else
