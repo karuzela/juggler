@@ -1,16 +1,25 @@
 %h2= @repository.full_name
 
-= form_tag repository_path(@repository), method: :patch do
-  %table
-    %thead
-      %tr
-        %th User
-        %th Email
-        %th Authorized reviewers
-    %tbody
-      - @users.each do |user|
+= form_for @form, as: :repository_form, url: repository_path(@repository), method: :patch do |f|
+  .form-inline
+    .form-group
+      = f.label 'Claim_time (h)'
+      = f.number_field :claim_time, class: 'form-control', min: 1
+    .form-group
+      = f.label 'Remind time (h)'
+      = f.number_field :remind_time, class: 'form-control', min: 1
+
+  .table-responsive
+    %table.table.no-margin
+      %thead
         %tr
-          %td= user.name
-          %td= user.email
-          %td= check_box_tag "reviewer_ids[]", user.id, @repository.authorized_reviewer_ids.include?(user.id)
-  = submit_tag "Apply"
+          %th User
+          %th Email
+          %th Authorized reviewers
+      %tbody
+        = f.collection_check_boxes(:authorized_reviewer_ids, @users, :id, :name) do |user|
+          %tr
+            %td= user.label
+            %td= user.object.email
+            %td= user.check_box
+  = f.submit "Apply"

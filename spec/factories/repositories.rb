@@ -6,6 +6,8 @@ FactoryGirl.define do
     sequence(:owner) { |number| "github-username-#{number}" }
     sequence(:full_name) { |number| "username/project-name-#{number}" }
     sequence(:github_id) { |number| number }
+    sequence(:claim_time) { |number| number }
+    sequence(:remind_time) { |number| number }
     synchronized true
   end
 end

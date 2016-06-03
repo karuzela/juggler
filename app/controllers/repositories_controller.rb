@@ -6,10 +6,6 @@ class RepositoriesController < AuthenticatedController
     @not_synchronized_repositories = Repository.where(synchronized: false).order(full_name: :asc)
   end
 
-  def show
-    @users = User.order(:name)
-  end
-
   def new
     @repository = Repository.new
     @required_scopes = Repository.subscribed_events
@@ -25,9 +21,23 @@ class RepositoriesController < AuthenticatedController
     end
   end
 
+  def show
+    @users = User.order(:name)
+    @form = UpdateRepositoryForm.new(repository_attributes)
+  end
+
   def update
-    @repository.update(authorized_reviewer_ids: params[:reviewer_ids])
-    redirect_to @repository, notice: 'Updated authorized reviewers'
+    @form = UpdateRepositoryForm.new(
+      repository_attributes,
+      repository_form_params
+    )
+    service = UpdateRepositoryService.new(@form, @repository)
+
+    if service.call
+      redirect_to @repository, notice: 'Repository updated'
+    else
+      redirect_to @repository, alert: 'Repository not updated'
+    end
   end
 
   def add
@@ -59,5 +69,13 @@ class RepositoriesController < AuthenticatedController
 
   def load_repository
     @repository = Repository.find(params[:id])
+  end
+
+  def repository_attributes
+    @repository.slice('claim_time', 'remind_time', 'authorized_reviewer_ids')
+  end
+
+  def repository_form_params
+    params.require(:repository_form).permit(:claim_time, :remind_time, authorized_reviewer_ids: [])
   end
 end
