@@ -7,7 +7,6 @@ class AutoAssignService
     return false if @pull_request.reviewer || !@pull_request.pending?
     update_pull_request
     send_slack_message
-    send_email_messsage
     set_reminder
 
     true
@@ -16,12 +15,12 @@ class AutoAssignService
   private
   def update_pull_request
     @reviewer = @pull_request.repository
-      .authorized_reviewers
-      .joins("LEFT JOIN pull_requests ON users.id = pull_requests.reviewer_id")
-      .select('users.*, count(pull_requests.id) as assigned_count')
-      .group('users.id')
-      .order('assigned_count asc')
-      .first
+    .authorized_reviewers
+    .joins("LEFT JOIN pull_requests ON users.id = pull_requests.reviewer_id")
+    .select('users.*, count(pull_requests.id) as assigned_count')
+    .group('users.id')
+    .order('assigned_count asc')
+    .first
     @pull_request.update(reviewer: @reviewer)
   end
 
@@ -36,11 +35,6 @@ class AutoAssignService
       channel: @pull_request.reviewer.slack_channel,
       attachments: attachments
     )
-  end
-
-  def send_email_messsage
-    return unless @reviewer
-    NotificationMailer.auto_assign(@pull_request).deliver_now
   end
 
   def set_reminder
