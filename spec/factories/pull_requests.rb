@@ -4,7 +4,7 @@ FactoryGirl.define do
     state { PullRequestState::PENDING }
     sequence(:title) { |number| "Pull request title #{number}" }
     body "Pull request body"
-    opened_at { Time.now }
     token { SecureRandom.urlsafe_base64 }
+    opened_at { Time.now }
   end
 end
