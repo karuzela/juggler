@@ -8,16 +8,16 @@ class SendSlackMessageService
 
   def call
     @slack.send_message(
-      message(@message_type),
+      message,
       attachments: [SlackAttachmentBuilder.build(@pull_request)],
-      channel: channel(@message_type)
+      channel: channel
     )
   end
 
   private
 
-  def message(message_type)
-    case message_type
+  def message
+    case @message_type
     when :auto_assign
       "Hey! You were auto-assigned to review this pull request. [Click here for details](#{@url})"
     when :reminder
@@ -29,8 +29,8 @@ class SendSlackMessageService
     end
   end
 
-  def channel(message_type)
-    case message_type
+  def channel
+    case @message_type
     when :new_pr
       default_channel
     else
