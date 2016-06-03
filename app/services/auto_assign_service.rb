@@ -15,12 +15,12 @@ class AutoAssignService
   private
   def update_pull_request
     @reviewer = @pull_request.repository
-    .authorized_reviewers
-    .joins("LEFT JOIN pull_requests ON users.id = pull_requests.reviewer_id")
-    .select('users.*, count(pull_requests.id) as assigned_count')
-    .group('users.id')
-    .order('assigned_count asc')
-    .first
+      .authorized_reviewers
+      .joins("LEFT JOIN pull_requests ON users.id = pull_requests.reviewer_id")
+      .select('users.*, count(pull_requests.id) as assigned_count')
+      .group('users.id')
+      .order('assigned_count asc')
+      .first
     @pull_request.update(reviewer: @reviewer)
   end
 
