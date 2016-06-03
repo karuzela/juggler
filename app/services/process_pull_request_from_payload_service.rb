@@ -54,7 +54,6 @@ class ProcessPullRequestFromPayloadService
     SendStatusToGithubPullRequest.new(@pull_request, status).call
     if payload_newer_than_pr?
       send_slack_info_message
-      send_email_to_reviewer
     end
   end
 
@@ -95,10 +94,5 @@ class ProcessPullRequestFromPayloadService
     else
       SendSlackMessageService.new(@pull_request, :new_pr).call
     end
-  end
-
-  def send_email_to_reviewer
-    return unless @pull_request.reviewer
-    NotificationMailer.back_to_review(@pull_request).deliver_now
   end
 end

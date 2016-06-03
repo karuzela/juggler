@@ -5,7 +5,6 @@ FactoryGirl.define do
     sequence(:title) { |number| "Pull request title #{number}" }
     body "Pull request body"
     opened_at { Time.now }
-    sequence(:token) { |number| number }
-    reviewer { create(:user) }
+    token { SecureRandom.urlsafe_base64 }
   end
 end

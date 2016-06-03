@@ -19,7 +19,7 @@ describe User do
 
   describe 'slack_channel' do
     it 'should return nil if slack_username is empty' do
-      user = create(:user)
+      user = create(:user, slack_username: nil)
       expect(user.slack_channel).to be_nil
     end
 

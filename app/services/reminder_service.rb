@@ -6,16 +6,11 @@ class ReminderService
   def call
     return false unless @pull_request.pending?
     send_slack_message
-    send_email_messsage
   end
 
   private
 
   def send_slack_message
     SendSlackMessageService.new(@pull_request, :reminder).call
-  end
-
-  def send_email_messsage
-    NotificationMailer.reminder(@pull_request).deliver_now
   end
 end

@@ -47,8 +47,8 @@ Rails.application.configure do
     config.action_mailer.delivery_method = :smtp
     ActionMailer::Base.smtp_settings = {
       address: ENV["MAIL_SMTP_SETTINGS_ADDRESS"],
-      port: ENV["MAIL_SMTP_SETTINGS_PORT"],
-      enable_starttls_auto: ENV["MAIL_SMTP_SETTINGS_ENABLE_STARTTLS_AUTO"] }
+      port: ENV["MAIL_SMTP_SETTINGS_PORT"].to_i,
+      enable_starttls_auto: ENV["MAIL_SMTP_SETTINGS_ENABLE_STARTTLS_AUTO"] == "true" }
   end
 
   config.action_mailer.delivery_method = :smtp
