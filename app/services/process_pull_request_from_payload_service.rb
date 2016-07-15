@@ -88,22 +88,11 @@ class ProcessPullRequestFromPayloadService
   end
 
   def send_slack_info_message
-    slack = SlackClient.new()
-    url = Rails.application.routes.url_helpers.pull_request_url(@pull_request, host: ENV["ACTION_MAILER_HOST"])
-    attachments = [SlackAttachmentBuilder.build(@pull_request)]
-
     if @pull_request.reviewer
-      slack.send_message(
-        "Hey! This pull request was updated. [Click here for details](#{url})",
-        attachments: attachments,
-        channel: @pull_request.reviewer.slack_channel
-      )
+      SendSlackMessageService.new(@pull_request, :pr_updated).call
       ReminderWorker.perform_at(WorkingHoursChecker.new(delay: ENV["REMAIND_AFTER_HOURS"]).get_date, @pull_request.id)
     else
-      slack.send_message(
-        "Greetings *Visuality Team*. New pull request is ready for code review. To claim it [click here](#{url}) or type \`juggler:claim #{@pull_request.token}\` on this channel.",
-        attachments: attachments
-      )
+      SendSlackMessageService.new(@pull_request, :new_pr).call
     end
   end
 end
