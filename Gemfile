@@ -37,5 +37,5 @@ group :test do
 end
 
 group :production do
-  gem "unicorn", "~> 5.0.1"
+  gem 'puma'
 end
