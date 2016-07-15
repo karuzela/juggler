@@ -1,6 +1,7 @@
 {
   "name": "juggler",
   "scripts": {
+    "postdeploy": "echo ENV['HEROKU_APP_NAME']"
   },
   "env": {
     "ACTION_MAILER_ASSET_HOST": {
@@ -35,6 +36,12 @@
       "required": true
     },
     "GITHUB_APP_CLIENT_SECRET": {
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
       "required": true
     },
     "LANG": {
