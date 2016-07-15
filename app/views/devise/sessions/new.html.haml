@@ -1,39 +1,11 @@
-/ <h2>Log in</h2>
+%h1{style: "color: #fff"}
+  = "Manage Pull Requests in your team projects."
+%br
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  = f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Enter your email"
+  %br
+  = f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Enter your password"
+  %br
+  = f.submit "Log in", class: "btn btn-lg btn-warning pull-right"
 
-/ <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-/     <%= f.email_field :email, autofocus: true %>
-
-/     <%= f.password_field :password, autocomplete: "off" %>
-
-/   <% if devise_mapping.rememberable? -%>>
-/       <%= f.check_box :remember_me %>
-/       <%= f.label :remember_me %>
-/   <% end -%>
-
-/     <%= f.submit "Log in" %>
-/ <% end %>
-
-/ <%= render "devise/shared/links" %>
-%section.content{style: "height: 650px;"}
-  .row{style: "margin-top: 50px"}
-    #container.container{:style => "position:absolute; left: -20px"}
-      = image_tag "tree.png", {:style => "position:absolute; left: 50%; margin-left: 513px; top:150px", :width => "100px"}
-      = image_tag "tree.png", { :style => "position:absolute; left: 50%; margin-left: 340px; top:40px", :width => "170px"}
-      = image_tag "tree.png", { :style => "position:absolute; top:-50px; left: 300px"}
-      = image_tag "tree.png", { :style => "position:absolute; margin-left: 190px; top:150px", :width => "100px"}
-      = image_tag "grass.png", { :style => "position:absolute; left: 50%; margin-left: 450px; top:450px"}
-      = image_tag "grass.png", { :style => "position:absolute; left: 300px; top:400px"}
-
-    .col-md-6{style: "margin-top:100px"}
-      %h1{style: "color: #fff"}
-        = "Manage Pull Requests in your team projects."
-      %br
-      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-        = f.email_field :email, autofocus: true, class: "form-control input-lg", placeholder: "Enter your email"
-        %br
-        = f.password_field :password, autocomplete: "off", class: "form-control input-lg", placeholder: "Enter your password"
-        %br
-        = f.submit "Log in", class: "btn btn-lg btn-warning pull-right"
-    .col-md-6
-      = image_tag "juggler_ladybird.png"
-
+= render 'devise/shared/links'
